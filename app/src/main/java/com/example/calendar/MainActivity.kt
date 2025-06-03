@@ -47,7 +47,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         calendarView.setOnDateChangedListener { _, date, _ ->
             Toast.makeText(
                 this,
-                "选中日期: ${date.year}/${date.month + 1}/${date.day}",
+                "选中日期: ${date.year}/${date.month}/${date.day}",
                 Toast.LENGTH_SHORT
             ).show()
         }
