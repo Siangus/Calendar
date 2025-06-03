@@ -1,19 +1,20 @@
 package com.example.calendar
+
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
     private val settingItems = listOf("字体大小", "节日显示", "天气显示", "全局背景")
 
+    override fun getLayoutResourceId(): Int = R.layout.activity_settings
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
 
         val listView = findViewById<ListView>(R.id.settingListView)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, settingItems)
@@ -32,7 +33,7 @@ class SettingsActivity : AppCompatActivity() {
                 AlertDialog.Builder(this)
                     .setTitle("选择字体大小")
                     .setSingleChoiceItems(options, -1) { dialog, which ->
-                        // 这里根据which保存对应设置
+                        // 根据 which 保存设置逻辑
                         dialog.dismiss()
                     }
                     .setNegativeButton("取消", null)
@@ -53,11 +54,12 @@ class SettingsActivity : AppCompatActivity() {
                     .show()
             }
             "全局背景" -> {
-                // 跳转到专门的背景设置界面
+                // 跳转背景设置界面
                 startActivity(Intent(this, BackgroundSettingActivity::class.java))
             }
         }
     }
+
     private fun saveBackgroundSetting(selectedIndex: Int) {
         val sharedPref = getSharedPreferences("app_settings", MODE_PRIVATE)
         with(sharedPref.edit()) {
@@ -67,4 +69,3 @@ class SettingsActivity : AppCompatActivity() {
         Toast.makeText(this, "背景设置已保存，请重新启动应用生效", Toast.LENGTH_SHORT).show()
     }
 }
-

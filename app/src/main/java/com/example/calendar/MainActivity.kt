@@ -20,7 +20,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 这里不要调用 setContentView，BaseActivity 已经调用了
 
         // 初始化 Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -40,7 +39,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // 初始化日历控件
+        // 初始化日历控件，默认选中今天
         calendarView = findViewById(R.id.calendarView)
         calendarView.selectedDate = CalendarDay.today()
 
@@ -51,9 +50,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 Toast.LENGTH_SHORT
             ).show()
         }
-
-        // 这里不需要再调用 applyBackgroundFromPrefs()
-        // 因为 BaseActivity 中已经调用过了
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
