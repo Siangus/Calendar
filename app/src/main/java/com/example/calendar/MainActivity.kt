@@ -1,9 +1,10 @@
 package com.example.calendar
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -11,14 +12,15 @@ import com.google.android.material.navigation.NavigationView
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var calendarView: MaterialCalendarView
 
+    override fun getLayoutResourceId(): Int = R.layout.activity_main
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         // 初始化 Toolbar 并设置为 ActionBar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -40,11 +42,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 初始化日历控件
         calendarView = findViewById(R.id.calendarView)
-
-        // 默认选中今天
         calendarView.selectedDate = CalendarDay.today()
 
-        // 日期选择监听
         calendarView.setOnDateChangedListener { _, date, _ ->
             Toast.makeText(
                 this,
@@ -54,20 +53,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    // 侧边栏菜单点击事件回调
+    override fun applyBackgroundImage() {
+        val prefs = getSharedPreferences("calendar_prefs", MODE_PRIVATE)
+        val resId = prefs.getInt("overlay_res", -1)
+        val alpha = prefs.getFloat("overlay_alpha", 0.4f)
+
+        if (resId != -1) {
+            backgroundImageView.setImageResource(resId)
+            backgroundImageView.alpha = alpha
+        } else {
+            super.applyBackgroundImage() // 用默认背景
+        }
+    }
+
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // 这里可以根据 item.itemId 做不同的操作
         when (item.itemId) {
-  //          R.id.nav_some_option -> {
-            //Toast.makeText(this, "点击了菜单项", Toast.LENGTH_SHORT).show()
-  //          }
-            // 其他菜单项处理...
+            R.id.nav_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    // 按返回键时，若抽屉打开，则先关闭抽屉
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
