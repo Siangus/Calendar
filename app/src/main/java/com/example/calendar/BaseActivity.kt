@@ -20,8 +20,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
         // 先初始化背景图层
         backgroundImageView = ImageView(this).apply {
-            scaleType = ImageView.ScaleType.CENTER_CROP
-            isClickable = false      // 不拦截触摸事件
+            scaleType = ImageView.ScaleType.FIT_XY
+            isClickable = false
             isFocusable = false
         }
 

@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import java.io.File
 
 class BackgroundSettingActivity : AppCompatActivity() {
 
@@ -14,6 +17,9 @@ class BackgroundSettingActivity : AppCompatActivity() {
     private lateinit var alphaText: TextView
 
     private val PICK_IMAGE_REQUEST_CODE = 1001
+    private val CROP_REQUEST_CODE = 2001
+
+    private var cropImageUri: Uri? = null  // 裁剪结果Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +30,9 @@ class BackgroundSettingActivity : AppCompatActivity() {
         alphaText = findViewById(R.id.alphaTextView)
 
         val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        val bgOption = prefs.getInt("background_option", 1)  // 默认选默认背景
+        val bgOption = prefs.getInt("background_option", 1)
         val alpha = prefs.getFloat("background_alpha", 0.4f)
 
-        // 初始化选中状态，只剩“默认”和“自定义”
         when (bgOption) {
             1 -> radioGroup.check(R.id.bgDefault)
             2 -> radioGroup.check(R.id.bgCustom)
@@ -44,11 +49,12 @@ class BackgroundSettingActivity : AppCompatActivity() {
             }
         }
 
-        alphaSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        alphaSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 alphaText.text = "透明度: $progress%"
                 prefs.edit().putFloat("background_alpha", progress / 100f).apply()
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -74,9 +80,62 @@ class BackgroundSettingActivity : AppCompatActivity() {
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data?.let { uri ->
                 contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                startCropImage(uri)
+            }
+        } else if (requestCode == CROP_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            cropImageUri?.let { uri ->
                 saveBackgroundOption(2, uri.toString())
                 Toast.makeText(this, "自定义背景已保存", Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(this, "裁剪失败，未获取到 Uri", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+
+    private fun startCropImage(sourceUri: Uri) {
+        val metrics = resources.displayMetrics
+        val width = metrics.widthPixels
+        val height = metrics.heightPixels
+
+        fun gcd(a: Int, b: Int): Int {
+            return if (b == 0) a else gcd(b, a % b)
+        }
+        val divisor = gcd(width, height)
+        val aspectX = width / divisor
+        val aspectY = height / divisor
+
+        // 生成输出Uri (裁剪后保存的位置)
+        val outputFile = File(cacheDir, "cropped_bg.png")
+        if (outputFile.exists()) outputFile.delete()
+        outputFile.createNewFile()
+        cropImageUri = FileProvider.getUriForFile(
+            this,
+            "${packageName}.fileprovider",
+            outputFile
+        )
+
+        val cropIntent = Intent("com.android.camera.action.CROP").apply {
+            setDataAndType(sourceUri, "image/*")
+            putExtra("crop", "true")
+            putExtra("aspectX", aspectX)
+            putExtra("aspectY", aspectY)
+            putExtra("outputX", width)
+            putExtra("outputY", height)
+            putExtra("scale", true)
+            putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri)
+            putExtra("return-data", false)
+            addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        if (cropIntent.resolveActivity(packageManager) != null) {
+            startActivityForResult(cropIntent, CROP_REQUEST_CODE)
+        } else {
+            Toast.makeText(this, "设备不支持图片裁剪", Toast.LENGTH_SHORT).show()
+            // 不支持裁剪时，直接保存原图Uri
+            saveBackgroundOption(2, sourceUri.toString())
+        }
+    }
+
 }
