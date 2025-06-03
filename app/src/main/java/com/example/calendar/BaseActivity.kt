@@ -15,20 +15,27 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 创建根容器
         rootContainer = FrameLayout(this)
 
-        backgroundImageView = ImageView(this).apply {
-            scaleType = ImageView.ScaleType.CENTER_CROP
-        }
-
-        rootContainer.addView(backgroundImageView, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
-        ))
-
-        // inflate 子类布局并添加
+        // 先添加子类布局（内容层）
         val content = layoutInflater.inflate(getLayoutResourceId(), null)
         rootContainer.addView(content)
+
+        // 添加背景图层（在最上面，半透明，覆盖视觉但不阻碍触摸）
+        backgroundImageView = ImageView(this).apply {
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            isClickable = false      // 不拦截触摸
+            isFocusable = false
+        }
+
+        rootContainer.addView(
+            backgroundImageView,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
 
         setContentView(rootContainer)
 
@@ -40,7 +47,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected fun applyBackgroundFromPrefs() {
         val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
         val bgType = prefs.getInt("background_color", 0)
-        val alpha = prefs.getFloat("background_alpha", 1.0f) // 测试时改为1.0f，方便观察
+        val alpha = prefs.getFloat("background_alpha", 1.0f)
 
         Log.d("BaseActivity", "applyBackgroundFromPrefs: bgType=$bgType, alpha=$alpha")
 
@@ -78,7 +85,6 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
-
 
     fun setBackgroundAlpha(alpha: Float) {
         backgroundImageView.alpha = alpha
