@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -77,20 +78,32 @@ class BackgroundSettingActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data?.let { uri ->
-                contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                startCropImage(uri)
+                Log.d("CropDebug", "用户选择了图片: $uri")
+                try {
+                    contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    startCropImage(uri)
+                } catch (e: SecurityException) {
+                    Log.e("CropDebug", "权限申请失败: ${e.message}")
+                    Toast.makeText(this, "读取图片权限被拒绝", Toast.LENGTH_SHORT).show()
+                }
             }
         } else if (requestCode == CROP_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             cropImageUri?.let { uri ->
+                val file = File(uri.path ?: "")
+                Log.d("CropDebug", "裁剪返回 URI: $uri")
+                Log.d("CropDebug", "裁剪输出文件是否存在: ${file.exists()}")
                 saveBackgroundOption(2, uri.toString())
                 Toast.makeText(this, "自定义背景已保存", Toast.LENGTH_SHORT).show()
             } ?: run {
+                Log.e("CropDebug", "裁剪失败，Uri 为空")
                 Toast.makeText(this, "裁剪失败，未获取到 Uri", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
 
     private fun startCropImage(sourceUri: Uri) {
@@ -105,10 +118,15 @@ class BackgroundSettingActivity : AppCompatActivity() {
         val aspectX = width / divisor
         val aspectY = height / divisor
 
-        // 生成输出Uri (裁剪后保存的位置)
         val outputFile = File(cacheDir, "cropped_bg.png")
-        if (outputFile.exists()) outputFile.delete()
-        outputFile.createNewFile()
+        if (outputFile.exists()) {
+            outputFile.delete()
+            Log.d("CropDebug", "已删除旧裁剪文件")
+        }
+
+        val created = outputFile.createNewFile()
+        Log.d("CropDebug", "创建新裁剪输出文件: ${outputFile.absolutePath}, 成功: $created")
+
         cropImageUri = FileProvider.getUriForFile(
             this,
             "${packageName}.fileprovider",
@@ -129,13 +147,18 @@ class BackgroundSettingActivity : AppCompatActivity() {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
+        Log.d("CropDebug", "准备启动裁剪，源图 URI: $sourceUri, 裁剪输出 URI: $cropImageUri")
+
         if (cropIntent.resolveActivity(packageManager) != null) {
+            Log.d("CropDebug", "找到裁剪应用，启动裁剪")
             startActivityForResult(cropIntent, CROP_REQUEST_CODE)
         } else {
+            Log.e("CropDebug", "未找到可处理裁剪的应用")
             Toast.makeText(this, "设备不支持图片裁剪", Toast.LENGTH_SHORT).show()
-            // 不支持裁剪时，直接保存原图Uri
             saveBackgroundOption(2, sourceUri.toString())
         }
     }
 
 }
+
+
