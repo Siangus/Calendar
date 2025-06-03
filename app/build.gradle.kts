@@ -49,6 +49,22 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("com.google.android.material:material:1.9.0") {
+        exclude(group = "com.android.support")
+    }
+
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1") {
+        exclude(group = "com.android.support")
+    }
+
+    implementation("androidx.navigation:navigation-ui-ktx:2.6.0") {
+        exclude(group = "com.android.support")
+    }
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0") {
+        exclude(group = "com.android.support")
+    }
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
