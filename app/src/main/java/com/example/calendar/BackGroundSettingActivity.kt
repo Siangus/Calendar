@@ -2,7 +2,6 @@ package com.example.calendar
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.widget.*
@@ -25,14 +24,14 @@ class BackgroundSettingActivity : AppCompatActivity() {
         alphaText = findViewById(R.id.alphaTextView)
 
         val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        val bgOption = prefs.getInt("background_option", 0)
+        val bgOption = prefs.getInt("background_option", 1)  // 默认选默认背景
         val alpha = prefs.getFloat("background_alpha", 0.4f)
 
-        // 初始化选中状态
+        // 初始化选中状态，只剩“默认”和“自定义”
         when (bgOption) {
-            0 -> radioGroup.check(R.id.bgNone)
             1 -> radioGroup.check(R.id.bgDefault)
             2 -> radioGroup.check(R.id.bgCustom)
+            else -> radioGroup.check(R.id.bgDefault)
         }
 
         alphaSeekBar.progress = (alpha * 100).toInt()
@@ -40,7 +39,6 @@ class BackgroundSettingActivity : AppCompatActivity() {
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.bgNone -> saveBackgroundOption(0, null)
                 R.id.bgDefault -> saveBackgroundOption(1, null)
                 R.id.bgCustom -> openImagePicker()
             }
