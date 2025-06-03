@@ -3,6 +3,7 @@ package com.example.calendar
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,14 +40,18 @@ abstract class BaseActivity : AppCompatActivity() {
     protected fun applyBackgroundFromPrefs() {
         val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
         val bgType = prefs.getInt("background_color", 0)
-        val alpha = prefs.getFloat("background_alpha", 0.3f)
+        val alpha = prefs.getFloat("background_alpha", 1.0f) // 测试时改为1.0f，方便观察
+
+        Log.d("BaseActivity", "applyBackgroundFromPrefs: bgType=$bgType, alpha=$alpha")
 
         backgroundImageView.alpha = alpha
 
         when (bgType) {
             0 -> {
                 rootContainer.setBackgroundColor(Color.WHITE)
-                backgroundImageView.setImageDrawable(null)
+                val drawable = getDrawable(R.drawable.default_background)
+                Log.d("BaseActivity", "Setting default background drawable: $drawable")
+                backgroundImageView.setImageDrawable(drawable)
             }
             1 -> {
                 rootContainer.setBackgroundColor(Color.LTGRAY)
@@ -59,6 +64,7 @@ abstract class BaseActivity : AppCompatActivity() {
             3 -> {
                 rootContainer.setBackgroundColor(Color.TRANSPARENT)
                 val uriStr = prefs.getString("custom_background_uri", null)
+                Log.d("BaseActivity", "Custom URI: $uriStr")
                 if (uriStr != null) {
                     val uri = Uri.parse(uriStr)
                     backgroundImageView.setImageURI(uri)
@@ -72,6 +78,7 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
+
 
     fun setBackgroundAlpha(alpha: Float) {
         backgroundImageView.alpha = alpha
