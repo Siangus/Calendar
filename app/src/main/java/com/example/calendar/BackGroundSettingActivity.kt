@@ -5,40 +5,47 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import java.io.File
 
-class BackgroundSettingActivity : AppCompatActivity() {
+// 继承 BaseActivity
+class BackgroundSettingActivity : BaseActivity() {
 
     private lateinit var radioGroup: RadioGroup
     private lateinit var alphaSeekBar: SeekBar
     private lateinit var alphaText: TextView
+    private lateinit var restartButton: Button
 
     private val PICK_IMAGE_REQUEST_CODE = 1001
-    private val CROP_REQUEST_CODE = 2001
-
-    private var cropImageUri: Uri? = null  // 裁剪结果Uri
-
+    override fun getLayoutResourceId(): Int {
+        return R.layout.activity_background_setting
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_background_setting)
-
         radioGroup = findViewById(R.id.bgRadioGroup)
         alphaSeekBar = findViewById(R.id.alphaSeekBar)
         alphaText = findViewById(R.id.alphaTextView)
+        restartButton = findViewById(R.id.restartButton) // 新增按钮
 
         val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        val bgOption = prefs.getInt("background_option", 1)
         val alpha = prefs.getFloat("background_alpha", 0.4f)
 
-        when (bgOption) {
-            1 -> radioGroup.check(R.id.bgDefault)
-            2 -> radioGroup.check(R.id.bgCustom)
-            else -> radioGroup.check(R.id.bgDefault)
+        // 判断是否有裁剪图Uri，有的话强制选中自定义背景，否则用保存的设置
+        val croppedUriString = prefs.getString("custom_background_uri", null)
+        val hasCroppedImage = !croppedUriString.isNullOrEmpty()
+
+        if (hasCroppedImage) {
+            radioGroup.check(R.id.bgCustom)
+            // 禁止默认按钮被选中（如果你希望禁用它，可以额外加禁用逻辑）
+        } else {
+            val bgOption = prefs.getInt("background_option", 1)
+            when (bgOption) {
+                1 -> radioGroup.check(R.id.bgDefault)
+                2 -> radioGroup.check(R.id.bgCustom)
+                else -> radioGroup.check(R.id.bgDefault)
+            }
         }
 
         alphaSeekBar.progress = (alpha * 100).toInt()
@@ -60,13 +67,27 @@ class BackgroundSettingActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+        // 重启按钮点击事件，示例重启 Activity 或调用系统重启逻辑
+        restartButton.setOnClickListener {
+            Toast.makeText(this, "重启生效...", Toast.LENGTH_SHORT).show()
+            // 简单重启当前 Activity
+            val intent = intent
+            finish()
+            startActivity(intent)
+            // 你也可以改成重启整个应用的逻辑
+        }
     }
 
+    // 保存设置（background_color 是 BaseActivity 使用的 key）
     private fun saveBackgroundOption(option: Int, uriString: String?) {
         val editor = getSharedPreferences("app_settings", MODE_PRIVATE).edit()
-        editor.putInt("background_color", option) // 👈 这是 BaseActivity 用的 key
+        editor.putInt("background_color", option)
         if (uriString != null) {
             editor.putString("custom_background_uri", uriString)
+        } else {
+            // 选默认背景时，清除裁剪Uri
+            editor.remove("custom_background_uri")
         }
         editor.apply()
     }
@@ -95,6 +116,8 @@ class BackgroundSettingActivity : AppCompatActivity() {
                 Toast.makeText(this, "裁剪成功：${resultUri.path}", Toast.LENGTH_SHORT).show()
                 Log.d("UCrop", "成功裁剪输出到: ${resultUri.path}")
                 saveBackgroundOption(2, resultUri.toString())
+                // 选中自定义背景按钮
+                radioGroup.check(R.id.bgCustom)
             } else {
                 Toast.makeText(this, "裁剪失败，Uri为空", Toast.LENGTH_SHORT).show()
                 Log.e("UCrop", "裁剪失败：结果 Uri 为空")
@@ -107,29 +130,21 @@ class BackgroundSettingActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
     private fun startCropImage(sourceUri: Uri) {
         val outputFile = File(filesDir, "cropped_bg.png")
 
-        // 清理旧文件
         if (outputFile.exists()) outputFile.delete()
 
-        // 使用 FileProvider 获取 Uri
         val destinationUri = FileProvider.getUriForFile(
             this,
             "$packageName.fileprovider",
             outputFile
         )
 
-        // 屏幕比例作为裁剪比例
         val displayMetrics = resources.displayMetrics
         val aspectRatioX = displayMetrics.widthPixels.toFloat()
         val aspectRatioY = displayMetrics.heightPixels.toFloat()
 
-        // 授权 UCrop 写目标文件
         grantUriPermission(
             "com.yalantis.ucrop",
             destinationUri,
@@ -151,13 +166,12 @@ class BackgroundSettingActivity : AppCompatActivity() {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         }
 
-        // 启动裁剪
         startActivityForResult(cropIntent, com.yalantis.ucrop.UCrop.REQUEST_CROP)
     }
 
-
-
-
+    // 覆写 BaseActivity 中获取窗口透明度的方法，让本界面更透明（阈值你可以调整）
+    override fun setBackgroundAlpha(alpha: Float) {
+        val limitedAlpha = if (alpha > 0.2f) 0.2f else alpha
+        super.setBackgroundAlpha(limitedAlpha)
+    }
 }
-
-

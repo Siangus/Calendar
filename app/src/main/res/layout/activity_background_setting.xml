@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RadioGroup
-        android:id="@+id/bgRadioGroup"
+    <!-- 背景图片层 -->
+    <ImageView
+        android:id="@+id/backgroundImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="背景图片"/>
 
-        <RadioButton
-            android:id="@+id/bgDefault"
+    <!-- 内容布局层 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RadioGroup
+            android:id="@+id/bgRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/bgDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="默认背景"/>
+
+            <RadioButton
+                android:id="@+id/bgCustom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自定义背景"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/alphaTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="默认背景"/>
+            android:text="透明度: 40%"
+            android:layout_marginTop="24dp"/>
 
-        <RadioButton
-            android:id="@+id/bgCustom"
+        <SeekBar
+            android:id="@+id/alphaSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="40"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/restartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="自定义背景"/>
-    </RadioGroup>
+            android:text="重启应用生效"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/alpha1TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="透明度设置重启生效"
-        android:layout_marginTop="24dp"/>
-    <TextView
-        android:id="@+id/alphaTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="透明度: 40%"
-        android:layout_marginTop="24dp"/>
-
-
-    <SeekBar
-        android:id="@+id/alphaSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="40"/>
-
-</LinearLayout>
+</FrameLayout>

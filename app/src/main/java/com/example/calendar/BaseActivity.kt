@@ -71,7 +71,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
 
-    fun setBackgroundAlpha(alpha: Float) {
+    open fun setBackgroundAlpha(alpha: Float) {
         val clampedAlpha = alpha.coerceIn(0.1f, 0.6f)
         backgroundImageView.alpha = clampedAlpha
         getSharedPreferences("app_settings", MODE_PRIVATE)
