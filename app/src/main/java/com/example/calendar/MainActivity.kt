@@ -3,7 +3,6 @@ package com.example.calendar
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -21,8 +20,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 这里不要调用 setContentView，BaseActivity 已经调用了
 
-        // 初始化 Toolbar 并设置为 ActionBar
+        // 初始化 Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        // 设置抽屉开关，连接 Toolbar 和 DrawerLayout
+        // 设置抽屉开关
         val toggle = androidx.appcompat.app.ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open,
@@ -51,27 +51,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        // 这里不需要再调用 applyBackgroundFromPrefs()
+        // 因为 BaseActivity 中已经调用过了
     }
-
-    override fun applyBackgroundImage() {
-        val prefs = getSharedPreferences("calendar_prefs", MODE_PRIVATE)
-        val resId = prefs.getInt("overlay_res", -1)
-        val alpha = prefs.getFloat("overlay_alpha", 0.4f)
-
-        if (resId != -1) {
-            backgroundImageView.setImageResource(resId)
-            backgroundImageView.alpha = alpha
-        } else {
-            super.applyBackgroundImage() // 用默认背景
-        }
-    }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-            }
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true

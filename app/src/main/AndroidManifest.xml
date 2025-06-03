@@ -25,6 +25,8 @@
         </activity>
         <activity
             android:name=".SettingsActivity" />
+        <activity android:name=".BackgroundSettingActivity" />
+
     </application>
 
 </manifest>

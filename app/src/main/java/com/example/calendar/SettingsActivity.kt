@@ -1,5 +1,6 @@
 package com.example.calendar
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -52,16 +53,8 @@ class SettingsActivity : AppCompatActivity() {
                     .show()
             }
             "全局背景" -> {
-                val backgrounds = arrayOf("白色", "浅灰", "浅蓝")
-                AlertDialog.Builder(this)
-                    .setTitle("选择全局背景颜色")
-                    .setSingleChoiceItems(backgrounds, -1) { dialog, which ->
-                        // 保存选择
-                        saveBackgroundSetting(which)
-                        dialog.dismiss()
-                    }
-                    .setNegativeButton("取消", null)
-                    .show()
+                // 跳转到专门的背景设置界面
+                startActivity(Intent(this, BackgroundSettingActivity::class.java))
             }
         }
     }
