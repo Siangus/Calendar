@@ -2,6 +2,7 @@ package com.example.calendar
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -63,8 +64,10 @@ class BackgroundSettingActivity : AppCompatActivity() {
 
     private fun saveBackgroundOption(option: Int, uriString: String?) {
         val editor = getSharedPreferences("app_settings", MODE_PRIVATE).edit()
-        editor.putInt("background_option", option)
-        if (uriString != null) editor.putString("custom_bg_uri", uriString)
+        editor.putInt("background_color", option) // 👈 这是 BaseActivity 用的 key
+        if (uriString != null) {
+            editor.putString("custom_background_uri", uriString)
+        }
         editor.apply()
     }
 
@@ -81,83 +84,79 @@ class BackgroundSettingActivity : AppCompatActivity() {
 
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data?.let { uri ->
-                Log.d("CropDebug", "用户选择了图片: $uri")
                 try {
                     contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    startCropImage(uri)
-                } catch (e: SecurityException) {
-                    Log.e("CropDebug", "权限申请失败: ${e.message}")
-                    Toast.makeText(this, "读取图片权限被拒绝", Toast.LENGTH_SHORT).show()
-                }
+                } catch (_: SecurityException) { }
+                startCropImage(uri)
             }
-        } else if (requestCode == CROP_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            cropImageUri?.let { uri ->
-                val file = File(uri.path ?: "")
-                Log.d("CropDebug", "裁剪返回 URI: $uri")
-                Log.d("CropDebug", "裁剪输出文件是否存在: ${file.exists()}")
-                saveBackgroundOption(2, uri.toString())
-                Toast.makeText(this, "自定义背景已保存", Toast.LENGTH_SHORT).show()
-            } ?: run {
-                Log.e("CropDebug", "裁剪失败，Uri 为空")
-                Toast.makeText(this, "裁剪失败，未获取到 Uri", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == com.yalantis.ucrop.UCrop.REQUEST_CROP && resultCode == Activity.RESULT_OK) {
+            val resultUri = com.yalantis.ucrop.UCrop.getOutput(data!!)
+            if (resultUri != null) {
+                Toast.makeText(this, "裁剪成功：${resultUri.path}", Toast.LENGTH_SHORT).show()
+                Log.d("UCrop", "成功裁剪输出到: ${resultUri.path}")
+                saveBackgroundOption(2, resultUri.toString())
+            } else {
+                Toast.makeText(this, "裁剪失败，Uri为空", Toast.LENGTH_SHORT).show()
+                Log.e("UCrop", "裁剪失败：结果 Uri 为空")
             }
+        } else if (resultCode == com.yalantis.ucrop.UCrop.RESULT_ERROR) {
+            val cropError = com.yalantis.ucrop.UCrop.getError(data!!)
+            cropError?.printStackTrace()
+            Toast.makeText(this, "裁剪出错: ${cropError?.message}", Toast.LENGTH_LONG).show()
+            Log.e("UCrop", "裁剪出错", cropError)
         }
     }
+
+
 
 
 
     private fun startCropImage(sourceUri: Uri) {
-        val metrics = resources.displayMetrics
-        val width = metrics.widthPixels
-        val height = metrics.heightPixels
+        val outputFile = File(filesDir, "cropped_bg.png")
 
-        fun gcd(a: Int, b: Int): Int {
-            return if (b == 0) a else gcd(b, a % b)
-        }
-        val divisor = gcd(width, height)
-        val aspectX = width / divisor
-        val aspectY = height / divisor
+        // 清理旧文件
+        if (outputFile.exists()) outputFile.delete()
 
-        val outputFile = File(cacheDir, "cropped_bg.png")
-        if (outputFile.exists()) {
-            outputFile.delete()
-            Log.d("CropDebug", "已删除旧裁剪文件")
-        }
-
-        val created = outputFile.createNewFile()
-        Log.d("CropDebug", "创建新裁剪输出文件: ${outputFile.absolutePath}, 成功: $created")
-
-        cropImageUri = FileProvider.getUriForFile(
+        // 使用 FileProvider 获取 Uri
+        val destinationUri = FileProvider.getUriForFile(
             this,
-            "${packageName}.fileprovider",
+            "$packageName.fileprovider",
             outputFile
         )
 
-        val cropIntent = Intent("com.android.camera.action.CROP").apply {
-            setDataAndType(sourceUri, "image/*")
-            putExtra("crop", "true")
-            putExtra("aspectX", aspectX)
-            putExtra("aspectY", aspectY)
-            putExtra("outputX", width)
-            putExtra("outputY", height)
-            putExtra("scale", true)
-            putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri)
-            putExtra("return-data", false)
-            addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        // 屏幕比例作为裁剪比例
+        val displayMetrics = resources.displayMetrics
+        val aspectRatioX = displayMetrics.widthPixels.toFloat()
+        val aspectRatioY = displayMetrics.heightPixels.toFloat()
+
+        // 授权 UCrop 写目标文件
+        grantUriPermission(
+            "com.yalantis.ucrop",
+            destinationUri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        )
+
+        val options = com.yalantis.ucrop.UCrop.Options().apply {
+            setCompressionFormat(Bitmap.CompressFormat.PNG)
+            setCompressionQuality(100)
+            setFreeStyleCropEnabled(false)
         }
 
-        Log.d("CropDebug", "准备启动裁剪，源图 URI: $sourceUri, 裁剪输出 URI: $cropImageUri")
+        val uCrop = com.yalantis.ucrop.UCrop.of(sourceUri, destinationUri)
+            .withAspectRatio(aspectRatioX, aspectRatioY)
+            .withMaxResultSize(displayMetrics.widthPixels, displayMetrics.heightPixels)
+            .withOptions(options)
 
-        if (cropIntent.resolveActivity(packageManager) != null) {
-            Log.d("CropDebug", "找到裁剪应用，启动裁剪")
-            startActivityForResult(cropIntent, CROP_REQUEST_CODE)
-        } else {
-            Log.e("CropDebug", "未找到可处理裁剪的应用")
-            Toast.makeText(this, "设备不支持图片裁剪", Toast.LENGTH_SHORT).show()
-            saveBackgroundOption(2, sourceUri.toString())
+        val cropIntent = uCrop.getIntent(this).apply {
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         }
+
+        // 启动裁剪
+        startActivityForResult(cropIntent, com.yalantis.ucrop.UCrop.REQUEST_CROP)
     }
+
+
+
 
 }
 

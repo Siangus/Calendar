@@ -65,6 +65,7 @@ dependencies {
         exclude(group = "com.android.support")
     }
 
+    implementation("com.github.yalantis:ucrop:2.2.8"){ exclude(group = "com.android.support")}
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
