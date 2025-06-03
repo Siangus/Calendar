@@ -18,27 +18,30 @@ abstract class BaseActivity : AppCompatActivity() {
         // 创建根容器
         rootContainer = FrameLayout(this)
 
-        // 先添加子类布局（内容层）
-        val content = layoutInflater.inflate(getLayoutResourceId(), null)
-        rootContainer.addView(content)
-
-        // 添加背景图层（在最上面，半透明，覆盖视觉但不阻碍触摸）
+        // 先初始化背景图层
         backgroundImageView = ImageView(this).apply {
             scaleType = ImageView.ScaleType.CENTER_CROP
-            isClickable = false      // 不拦截触摸
+            isClickable = false      // 不拦截触摸事件
             isFocusable = false
         }
 
+        // 添加背景图层（最底层，index 0）
         rootContainer.addView(
             backgroundImageView,
+            0,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
         )
 
+        // 添加子类布局（内容层，覆盖在背景图上）
+        val content = layoutInflater.inflate(getLayoutResourceId(), null)
+        rootContainer.addView(content)
+
         setContentView(rootContainer)
 
+        // 确保backgroundImageView已初始化后调用
         applyBackgroundFromPrefs()
     }
 
@@ -51,7 +54,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
         Log.d("BaseActivity", "applyBackgroundFromPrefs: bgType=$bgType, alpha=$alpha")
 
-        backgroundImageView.alpha = alpha
+        // 透明度限制范围，避免全透明导致看不到背景
+        val clampedAlpha = alpha.coerceIn(0.1f, 0.6f)
+        backgroundImageView.alpha = clampedAlpha
 
         when (bgType) {
             0 -> {
@@ -87,8 +92,9 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun setBackgroundAlpha(alpha: Float) {
-        backgroundImageView.alpha = alpha
+        val clampedAlpha = alpha.coerceIn(0.1f, 0.6f)
+        backgroundImageView.alpha = clampedAlpha
         getSharedPreferences("app_settings", MODE_PRIVATE)
-            .edit().putFloat("background_alpha", alpha).apply()
+            .edit().putFloat("background_alpha", clampedAlpha).apply()
     }
 }

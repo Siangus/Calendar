@@ -24,9 +24,9 @@ class BackgroundSettingActivity : AppCompatActivity() {
         alphaSeekBar = findViewById(R.id.alphaSeekBar)
         alphaText = findViewById(R.id.alphaTextView)
 
-        val prefs = getSharedPreferences("calendar_prefs", MODE_PRIVATE)
+        val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
         val bgOption = prefs.getInt("background_option", 0)
-        val alpha = prefs.getFloat("overlay_alpha", 0.4f)
+        val alpha = prefs.getFloat("background_alpha", 0.4f)
 
         // 初始化选中状态
         when (bgOption) {
@@ -49,7 +49,7 @@ class BackgroundSettingActivity : AppCompatActivity() {
         alphaSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 alphaText.text = "透明度: $progress%"
-                prefs.edit().putFloat("overlay_alpha", progress / 100f).apply()
+                prefs.edit().putFloat("background_alpha", progress / 100f).apply()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -57,7 +57,7 @@ class BackgroundSettingActivity : AppCompatActivity() {
     }
 
     private fun saveBackgroundOption(option: Int, uriString: String?) {
-        val editor = getSharedPreferences("calendar_prefs", MODE_PRIVATE).edit()
+        val editor = getSharedPreferences("app_settings", MODE_PRIVATE).edit()
         editor.putInt("background_option", option)
         if (uriString != null) editor.putString("custom_bg_uri", uriString)
         editor.apply()
