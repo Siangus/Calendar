@@ -3,6 +3,8 @@ package com.example.calendar
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -15,11 +17,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var calendarView: MaterialCalendarView
-
+    private lateinit var weatherIcon: ImageView
+    private lateinit var weatherInfo: TextView
     override fun getLayoutResourceId(): Int = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        weatherIcon = findViewById(R.id.weatherIcon)
+        weatherInfo = findViewById(R.id.weatherInfo)
 
         // 初始化 Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -44,11 +49,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         calendarView.selectedDate = CalendarDay.today()
 
         calendarView.setOnDateChangedListener { _, date, _ ->
-            Toast.makeText(
-                this,
-                "选中日期: ${date.year}/${date.month}/${date.day}",
-                Toast.LENGTH_SHORT
-            ).show()
+            val dateStr = "%04d-%02d-%02d".format(date.year, date.month, date.day)
+
+            Toast.makeText(this, "选中日期: $dateStr", Toast.LENGTH_SHORT).show()
+            updateWeatherForDate(dateStr)
         }
     }
 
@@ -67,4 +71,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             super.onBackPressed()
         }
     }
+    private fun updateWeatherForDate(dateStr: String) {
+        val resId = WeatherRequestSolver.getWeatherIcon(dateStr)
+        weatherIcon.setImageResource(resId)
+
+        val info = WeatherRequestSolver.getWeatherInfo(dateStr)
+        weatherInfo.text = info
+    }
+
+
 }

@@ -1,35 +1,27 @@
 package com.example.calendar
-import android.content.Context
-import java.util.Scanner
 
-class WeatherRequestSolver(private val context: Context) {
-    private val configMap = mutableMapOf<String, String>()
+object WeatherRequestSolver {
 
-    init {
-        loadConfig()
+    /**
+     * 传入日期字符串 yyyy-MM-dd，返回 drawable 资源 id（这里固定返回 R.drawable.w2 用于测试）
+     */
+    fun getWeatherIcon(dateStr: String): Int {
+//后续应该根据日期String返回对应的icon的资源ID
+        return R.drawable.w2
     }
 
-    private fun loadConfig() {
-        try {
-            context.assets.open("weather_config.txt").use { inputStream ->
-                Scanner(inputStream).use { scanner ->
-                    while (scanner.hasNextLine()) {
-                        val line = scanner.nextLine()
-                        val parts = line.split("=")
-                        if (parts.size == 2) {
-                            configMap[parts[0].trim()] = parts[1].trim()
-                        }
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    /**
+     * 传入日期字符串，返回天气描述字符串（这里固定返回测试内容）
+     */
+    fun getWeatherInfo(dateStr: String): String {
+        return "测试天气信息"
     }
 
+    /**
+     * 后续可扩展：处理 JSON 数据的示例接口
+     */
     fun processWeatherData(jsonData: String): Map<String, Any> {
-        // 这里应该实现JSON解析和数据处理逻辑
-        // 现在返回一个空Map作为示例
+        // TODO: 实现 JSON 解析和数据处理
         return emptyMap()
     }
 }
