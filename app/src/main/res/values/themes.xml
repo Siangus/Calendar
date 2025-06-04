@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Calendar" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <!-- 应用主题 -->
+    <style name="Theme.Calendar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="navigationViewStyle">@style/CustomNavigationView</item>
+    </style>
+
+    <!-- 自定义 NavigationView -->
+    <style name="CustomNavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="itemIconTint">@null</item>
+    </style>
 
 </resources>
