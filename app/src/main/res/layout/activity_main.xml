@@ -37,21 +37,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"/>
 
-            <ImageView
-                android:id="@+id/weatherIcon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_weather" />
-
-            <TextView
-                android:id="@+id/weatherInfo"
-                android:layout_width="wrap_content"
+            <!-- 天气信息块（横向排列） -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="天气信息"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <ImageView
+                    android:id="@+id/weatherIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/weather_icon"
+                    android:src="@drawable/ic_weather"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:id="@+id/weatherInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="天气信息"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="#CCCCCC" />
+
+            <!-- 备忘录展示 -->
+            <TextView
+                android:id="@+id/memoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="16sp"
+                android:textColor="#000000"/>
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

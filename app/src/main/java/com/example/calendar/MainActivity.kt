@@ -19,12 +19,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var weatherIcon: ImageView
     private lateinit var weatherInfo: TextView
+    private lateinit var memoInfo: TextView
+
     override fun getLayoutResourceId(): Int = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         weatherIcon = findViewById(R.id.weatherIcon)
         weatherInfo = findViewById(R.id.weatherInfo)
+        memoInfo = findViewById(R.id.memoInfo)
 
         // 初始化 Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -47,13 +50,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // 初始化日历控件，默认选中今天
         calendarView = findViewById(R.id.calendarView)
         calendarView.selectedDate = CalendarDay.today()
-
         calendarView.setOnDateChangedListener { _, date, _ ->
             val dateStr = "%04d-%02d-%02d".format(date.year, date.month, date.day)
 
             Toast.makeText(this, "选中日期: $dateStr", Toast.LENGTH_SHORT).show()
-            updateWeatherForDate(dateStr)
+            updateInfoForDate(dateStr)
         }
+        //触发当天的更新
+        val today = CalendarDay.today()
+        val dateStr = "%04d-%02d-%02d".format(today.year, today.month, today.day)
+        updateInfoForDate(dateStr)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -71,12 +77,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             super.onBackPressed()
         }
     }
-    private fun updateWeatherForDate(dateStr: String) {
+    private fun updateInfoForDate(dateStr: String) {
+        // 更新天气
         val resId = WeatherRequestSolver.getWeatherIcon(dateStr)
         weatherIcon.setImageResource(resId)
+        weatherInfo.text = WeatherRequestSolver.getWeatherInfo(dateStr)
 
-        val info = WeatherRequestSolver.getWeatherInfo(dateStr)
-        weatherInfo.text = info
+        // 更新备忘录
+        val memo = MemoRequestSolver.getMemoContent(dateStr)
+        memoInfo.text = memo
     }
 
 
