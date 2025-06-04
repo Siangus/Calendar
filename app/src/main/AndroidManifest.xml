@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.calendar">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -41,10 +41,15 @@
 
         <activity android:name=".SettingsActivity" />
         <activity android:name=".BackgroundSettingActivity" />
+
+        <!-- 新增Memo相关Activity声明 -->
+        <activity android:name=".MemoActivity" />
+        <activity android:name=".MemoEditActivity" />
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

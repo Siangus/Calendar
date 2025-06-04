@@ -9,4 +9,19 @@ object MemoRequestSolver {
             else -> "暂无备忘"
         }
     }
+    fun getMemoList(): List<MemoItem> {
+        return listOf(
+            MemoItem("2025-06-03", "标题2", "Ori永远喜欢我"),
+            MemoItem("2025-06-05", "标题1", "我永远喜欢Ori"),
+            MemoItem("2025-06-06", "标题3", "Nibel的精灵"),
+
+        )
+    }
+    fun getMemoByDate(date: String): MemoItem? {
+        return getMemoList().find { it.date == date }
+    }
+
+    fun saveMemo(date: String, title: String, text: String) {
+        // 这里写保存逻辑，比如写数据库或内存列表更新
+    }
 }
