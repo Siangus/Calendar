@@ -37,6 +37,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"/>
 
+            <!-- 节日信息显示 -->
+            <TextView
+                android:id="@+id/festivalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="节日信息将显示在这里"/>
+
             <!-- 天气信息块（横向排列） -->
             <LinearLayout
                 android:layout_width="match_parent"

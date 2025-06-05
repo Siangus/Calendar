@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
@@ -20,6 +21,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private lateinit var weatherIcon: ImageView
     private lateinit var weatherInfo: TextView
     private lateinit var memoInfo: TextView
+    private lateinit var festivalInfo: TextView
+
 
     override fun getLayoutResourceId(): Int = R.layout.activity_main
 
@@ -28,6 +31,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         weatherIcon = findViewById(R.id.weatherIcon)
         weatherInfo = findViewById(R.id.weatherInfo)
         memoInfo = findViewById(R.id.memoInfo)
+        festivalInfo = findViewById(R.id.festivalInfo)
+
 
         // 初始化 Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -87,6 +92,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // 更新备忘录
         val memo = MemoRequestSolver.getMemoContent(dateStr)
         memoInfo.text = memo
+
+        // 更新节日信息
+        festivalInfo.text=FestivalSupporter.getFestival(dateStr)
+
+
     }
 
 

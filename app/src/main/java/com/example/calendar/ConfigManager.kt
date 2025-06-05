@@ -53,6 +53,7 @@ object ConfigManager {
         const val BACKGROUND_OPTION = "background_option"  // 1=默认 2=自定义
         const val BACKGROUND_ALPHA = "background_alpha"
         const val CUSTOM_BACKGROUND_URI = "custom_background_uri"
-        // 其他键也可以集中定义
+        const val SHOW_FESTIVAL = "show_festival"  // 0=不显示, 1=公历节日, 2=公历+农历节日
+        // 其他键在这里集中定义
     }
 }

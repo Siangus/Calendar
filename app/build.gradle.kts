@@ -64,7 +64,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0") {
         exclude(group = "com.android.support")
     }
-
+    implementation("cn.6tail:lunar:1.3.0")
     implementation("com.github.yalantis:ucrop:2.2.8"){ exclude(group = "com.android.support")}
 
     testImplementation(libs.junit)
