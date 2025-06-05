@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#F5F5F5"
-                android:title="@string/app_name"
+                android:title="主页"
                 android:titleTextColor="#000000" />
         </com.google.android.material.appbar.AppBarLayout>
 

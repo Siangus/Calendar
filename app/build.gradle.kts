@@ -18,8 +18,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:/Users/26877/Desktop/Calendar/your_keystore.jks")
+            storePassword = "siangus"
+            keyAlias = "siangus"
+            keyPassword = "siangus"
+        }
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -27,20 +37,22 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -65,7 +77,9 @@ dependencies {
         exclude(group = "com.android.support")
     }
     implementation("cn.6tail:lunar:1.3.0")
-    implementation("com.github.yalantis:ucrop:2.2.8"){ exclude(group = "com.android.support")}
+    implementation("com.github.yalantis:ucrop:2.2.8") {
+        exclude(group = "com.android.support")
+    }
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
