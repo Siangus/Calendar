@@ -1,6 +1,11 @@
 package com.example.calendar
+
+import android.content.Context
+
 abstract class WeatherRequestSolver {
 //所有天气相关的调用都应该用这里的方法。使用时实例化一个这个的子类
+    abstract fun init(context: Context)
+
     fun getWeatherIcon(dateStr: String): Int {
         val data = fetchWeatherData(dateStr)
         return parseIconId(data)

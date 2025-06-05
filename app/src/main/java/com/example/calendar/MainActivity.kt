@@ -32,6 +32,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         weatherInfo = findViewById(R.id.weatherInfo)
         memoInfo = findViewById(R.id.memoInfo)
         festivalInfo = findViewById(R.id.festivalInfo)
+        weatherSolver = ApiRequestSolver
+        weatherSolver.init(this)
 
 
         // 初始化 Toolbar
