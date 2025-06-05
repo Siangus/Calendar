@@ -22,9 +22,14 @@ object FestivalSupporter {
         val month = parts[1].toIntOrNull() ?: return "日期格式错误"
         val day = parts[2].toIntOrNull() ?: return "日期格式错误"
 
-        val resultParts = mutableListOf<String>()
         val mode = ConfigManager.getInt(ConfigManager.Keys.SHOW_FESTIVAL, 1)
 
+        if (mode == 0) {
+            // 不显示节日，返回空字符串
+            return ""
+        }
+
+        val resultParts = mutableListOf<String>()
         val monthDayKey = "%02d-%02d".format(month, day)
 
         // 公历节日
@@ -47,4 +52,5 @@ object FestivalSupporter {
             "无节日"
         }
     }
+
 }
