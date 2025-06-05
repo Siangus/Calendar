@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 import android.os.Handler
+import android.widget.EditText
 
 class SettingsActivity : BaseActivity() {
 
@@ -50,6 +51,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun showSettingDialog(settingName: String) {
         when (settingName) {
+            /*我看得清（bushi）感觉麻烦先不做了
             "字体大小" -> {
                 val options = arrayOf("小", "中", "大")
                 AlertDialog.Builder(this)
@@ -61,6 +63,8 @@ class SettingsActivity : BaseActivity() {
                     .setNegativeButton("取消", null)
                     .show()
             }
+
+             */
             "节日显示" -> {
                 val options = arrayOf("不显示节日", "仅显示公历节日", "公历与农历节日")
                 val currentMode = ConfigManager.getInt(ConfigManager.Keys.SHOW_FESTIVAL, 1)
@@ -76,12 +80,23 @@ class SettingsActivity : BaseActivity() {
                     .show()
             }
             "天气显示" -> {
+                val input = EditText(this)
+                // 这里用ConfigManager.getString()返回的是String?，所以用 ?: "" 防止空指针
+                input.setText(ConfigManager.getString(ConfigManager.Keys.WEATHER_API_KEY) ?: "")
+
                 AlertDialog.Builder(this)
                     .setTitle("天气显示设置")
-                    .setMessage("这里可以配置天气显示相关的设置。")
-                    .setPositiveButton("确定", null)
+                    .setMessage("请输入天气API Key")
+                    .setView(input)
+                    .setPositiveButton("保存") { _, _ ->
+                        val newKey = input.text.toString().trim()
+                        ConfigManager.set(ConfigManager.Keys.WEATHER_API_KEY, newKey)
+                        Toast.makeText(this, "API Key已保存", Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("取消", null)
                     .show()
             }
+
             "全局背景" -> {
                 startActivity(Intent(this, BackgroundSettingActivity::class.java))
             }

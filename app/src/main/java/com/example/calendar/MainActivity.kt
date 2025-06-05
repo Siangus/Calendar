@@ -15,7 +15,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+    private lateinit var weatherSolver: WeatherRequestSolver  // 用抽象父类引用
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var weatherIcon: ImageView
@@ -84,19 +84,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
     private fun updateInfoForDate(dateStr: String) {
-        // 更新天气
-        val resId = WeatherRequestSolver.getWeatherIcon(dateStr)
+        // 用weatherSolver实例调用
+        val resId = weatherSolver.getWeatherIcon(dateStr)
         weatherIcon.setImageResource(resId)
-        weatherInfo.text = WeatherRequestSolver.getWeatherInfo(dateStr)
+        weatherInfo.text = weatherSolver.getWeatherInfo(dateStr)
 
-        // 更新备忘录
         val memo = MemoRequestSolver.getMemoContent(dateStr)
         memoInfo.text = memo
-
-        // 更新节日信息
-        festivalInfo.text=FestivalSupporter.getFestival(dateStr)
-
-
+        festivalInfo.text = FestivalSupporter.getFestival(dateStr)
     }
 
 
