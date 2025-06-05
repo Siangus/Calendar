@@ -13,7 +13,7 @@ import android.widget.EditText
 
 class SettingsActivity : BaseActivity() {
 
-    private val settingItems = listOf("字体大小", "节日显示", "天气显示", "全局背景")
+    private val settingItems = listOf("节日显示", "天气显示", "全局背景")
 
     override fun getLayoutResourceId(): Int = R.layout.activity_settings
 
