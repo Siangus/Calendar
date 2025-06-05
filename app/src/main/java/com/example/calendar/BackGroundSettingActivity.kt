@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.*
 import androidx.core.content.FileProvider
@@ -74,10 +76,23 @@ class BackgroundSettingActivity : BaseActivity() {
         })
 
         restartButton.setOnClickListener {
-            Toast.makeText(this, "重启生效...", Toast.LENGTH_SHORT).show()
-            val intent = intent
-            finish()
-            startActivity(intent)
+            Toast.makeText(this, "重启应用...", Toast.LENGTH_SHORT).show()
+
+            // 获取启动 Activity 的 Intent
+            val packageManager = packageManager
+            val intent = packageManager.getLaunchIntentForPackage(packageName)
+
+            // 清除任务栈并创建新任务
+            intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                    Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            // 延迟一会确保 Toast 显示完整
+            Handler(Looper.getMainLooper()).postDelayed({
+                startActivity(intent)
+                // 结束当前进程（可选）
+                // android.os.Process.killProcess(android.os.Process.myPid())
+            }, 500)
         }
     }
 
