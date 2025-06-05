@@ -33,8 +33,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         memoInfo = findViewById(R.id.memoInfo)
         festivalInfo = findViewById(R.id.festivalInfo)
         weatherSolver = ApiRequestSolver
-        weatherSolver.init(this)
-
+        weatherSolver.init(this) {
+            val today = CalendarDay.today()
+            val dateStr = "%04d-%02d-%02d".format(today.year, today.month, today.day)
+            updateInfoForDate(dateStr)
+        }
 
         // 初始化 Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)

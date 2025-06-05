@@ -26,9 +26,9 @@ object ApiRequestSolver : WeatherRequestSolver() {
 
     private var apiKey: String? = null
 
-    override fun init(context: Context) {
+    override fun init(context: Context, onDataLoaded: (() -> Unit)?) {
+        this.onDataLoaded = onDataLoaded
         apiKey = ConfigManager.getString(ConfigManager.Keys.WEATHER_API_KEY)
-        Log.d(TAG, "读取到的API Key: $apiKey")
         if (apiKey.isNullOrEmpty()) {
             Log.e(TAG, "API Key 未配置")
             return
@@ -57,9 +57,14 @@ object ApiRequestSolver : WeatherRequestSolver() {
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "天气请求异常: ${e.message}", e)
+            } finally {
+                withContext(Dispatchers.Main) {
+                    onDataLoaded?.invoke()
+                }
             }
         }
     }
+
 
     private fun parseAndCache(jsonStr: String) {
         Log.d(TAG, "开始解析天气数据")

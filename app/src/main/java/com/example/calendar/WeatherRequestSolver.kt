@@ -3,8 +3,11 @@ package com.example.calendar
 import android.content.Context
 
 abstract class WeatherRequestSolver {
+
+    protected var onDataLoaded: (() -> Unit)? = null
 //所有天气相关的调用都应该用这里的方法。使用时实例化一个这个的子类
-    abstract fun init(context: Context)
+
+    abstract fun init(context: Context, onDataLoaded: (() -> Unit)? = null)
 
     fun getWeatherIcon(dateStr: String): Int {
         val data = fetchWeatherData(dateStr)
