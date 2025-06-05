@@ -6,9 +6,11 @@ import android.os.Looper
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -71,8 +73,41 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     }
 
     private fun showSettingDialog(settingName: String) {
-        // 保持你已有的实现不变
-        // ...
+        when (settingName) {
+            "节日显示" -> {
+                val options = arrayOf("不显示节日", "仅显示公历节日", "公历与农历节日")
+                val currentMode = ConfigManager.getInt(ConfigManager.Keys.SHOW_FESTIVAL, 1)
+
+                AlertDialog.Builder(this)
+                    .setTitle("节日显示设置")
+                    .setSingleChoiceItems(options, currentMode) { dialog, which ->
+                        ConfigManager.set(ConfigManager.Keys.SHOW_FESTIVAL, which)
+                        Toast.makeText(this, "节日显示设置已保存", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("取消", null)
+                    .show()
+            }
+            "天气显示" -> {
+                val input = EditText(this)
+                input.setText(ConfigManager.getString(ConfigManager.Keys.WEATHER_API_KEY) ?: "")
+
+                AlertDialog.Builder(this)
+                    .setTitle("天气显示设置")
+                    .setMessage("请输入天气API Key")
+                    .setView(input)
+                    .setPositiveButton("保存") { _, _ ->
+                        val newKey = input.text.toString().trim()
+                        ConfigManager.set(ConfigManager.Keys.WEATHER_API_KEY, newKey)
+                        Toast.makeText(this, "API Key已保存", Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("取消", null)
+                    .show()
+            }
+            "全局背景" -> {
+                startActivity(Intent(this, BackgroundSettingActivity::class.java))
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
