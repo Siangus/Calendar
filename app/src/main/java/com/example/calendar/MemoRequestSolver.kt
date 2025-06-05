@@ -1,27 +1,43 @@
 package com.example.calendar
 
-object MemoRequestSolver {
-    fun getMemoContent(dateStr: String): String {
-        // 暂时使用伪数据模拟备忘录内容
-        return when (dateStr) {
-            "2025-06-05" -> "备忘：提交月报"
-            "2025-06-06" -> "备忘：开会 + 天气变冷"
-            else -> "暂无备忘"
-        }
-    }
-    fun getMemoList(): List<MemoItem> {
-        return listOf(
-            MemoItem("2025-06-03", "标题2", "Ori永远喜欢我"),
-            MemoItem("2025-06-05", "标题1", "我永远喜欢Ori"),
-            MemoItem("2025-06-06", "标题3", "Nibel的精灵"),
+import android.content.Context
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-        )
+object MemoRequestSolver {
+    private lateinit var dbHelper: MemoDbHelper
+
+    // 一定要先调用这个初始化！
+    fun init(context: Context) {
+        dbHelper = MemoDbHelper.getInstance(context)
     }
+
+    fun getMemoContent(dateStr: String): String {
+        val memo = dbHelper.queryMemoByDate(dateStr)
+        return memo?.text ?: "暂无备忘"
+    }
+
+    fun getMemoList(): List<MemoItem> {
+        return dbHelper.queryAllMemosSortedByEditTime()
+    }
+
     fun getMemoByDate(date: String): MemoItem? {
-        return getMemoList().find { it.date == date }
+        return dbHelper.queryMemoByDate(date)
     }
 
     fun saveMemo(date: String, title: String, text: String) {
-        // 这里写保存逻辑，比如写数据库或内存列表更新
+        val now = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault()).format(Date())
+        val existingMemo = dbHelper.queryMemoByDate(date)
+        if (existingMemo == null) {
+            dbHelper.insertMemo(date, title, text, now)
+        } else {
+            dbHelper.updateMemo(existingMemo.id, title, text, now)
+        }
     }
+    fun deleteMemo(date: String) {
+        val db = dbHelper.writableDatabase
+        db.delete("Memo", "date = ?", arrayOf(date))
+    }
+
 }

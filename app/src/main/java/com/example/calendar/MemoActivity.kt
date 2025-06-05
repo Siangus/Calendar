@@ -2,6 +2,7 @@ package com.example.calendar
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,12 +22,16 @@ class MemoActivity : BaseActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // 加入分割线
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         divider.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider)!!)
         recyclerView.addItemDecoration(divider)
 
-        // 获取数据
+        findViewById<Button>(R.id.btnAddMemo).setOnClickListener {
+            val intent = Intent(this, MemoEditActivity::class.java)
+            intent.putExtra("date", "") // 空表示新建
+            startActivity(intent)
+        }
+
         memoList.addAll(MemoRequestSolver.getMemoList())
         adapter = MemoAdapter(memoList) { memoItem ->
             val intent = Intent(this, MemoEditActivity::class.java)
