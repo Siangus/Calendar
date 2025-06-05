@@ -112,13 +112,16 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> drawerLayout.closeDrawer(GravityCompat.START)  // 当前页关闭抽屉
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
             R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

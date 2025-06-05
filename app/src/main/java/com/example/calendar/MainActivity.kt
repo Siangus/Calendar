@@ -76,6 +76,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         when (item.itemId) {
             R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
