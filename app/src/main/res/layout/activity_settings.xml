@@ -7,50 +7,52 @@
     android:layout_height="match_parent">
 
     <!-- 主内容区 -->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/toolbar_background"
-                    android:title="设置"
-                    android:titleTextColor="@color/toolbar_text"/>
-            </com.google.android.material.appbar.AppBarLayout>
-
-        <LinearLayout
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background"
+            android:title="设置"
+            android:titleTextColor="@color/toolbar_text"/>
 
-            <ListView
-                android:id="@+id/settingListView"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:dividerHeight="1dp"
-                android:divider="@color/color_gray" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <Button
-                android:id="@+id/restartButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="重启应用以生效"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/button_background"
-                android:textColor="@color/button_text"
-                android:layout_gravity="center_horizontal" />
+                <ListView
+                    android:id="@+id/settingListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:dividerHeight="1dp"
+                    android:divider="@color/color_gray" />
 
-        </LinearLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <Button
+                    android:id="@+id/restartButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重启应用以生效"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/button_background"
+                    android:textColor="@color/button_text"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
     <!-- 侧边栏 -->
     <com.google.android.material.navigation.NavigationView

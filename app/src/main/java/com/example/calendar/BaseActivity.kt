@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import java.io.File
 
 abstract class BaseActivity : AppCompatActivity() {

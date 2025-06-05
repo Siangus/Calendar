@@ -54,6 +54,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
+        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         // 初始化日历控件，默认选中今天
         calendarView = findViewById(R.id.calendarView)

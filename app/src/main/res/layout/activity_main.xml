@@ -6,95 +6,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 主内容 -->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <!-- 主内容区，垂直布局 -->
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background"
+            android:elevation="4dp"
+            android:titleTextColor="@color/toolbar_text"
+            app:title="主页" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/toolbar_background"
-                android:title="主页"
-                android:titleTextColor="@color/toolbar_text" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <LinearLayout
+        <!-- 内容滚动区 -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp">
 
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"/>
-
-            <!-- 节日信息显示 -->
-            <TextView
-                android:id="@+id/festivalInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textSize="18sp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:text="节日信息将显示在这里"/>
-
-            <!-- 天气信息块（带背景） -->
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:background="@color/button_background"
-                android:layout_marginBottom="16dp">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/weatherIcon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:contentDescription="@string/weather_icon"
-                    android:src="@drawable/ic_weather"
-                    android:layout_marginEnd="12dp" />
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp" />
 
                 <TextView
-                    android:id="@+id/weatherInfo"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/festivalInfo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="天气信息"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="节日信息将显示在这里" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:background="@color/button_background"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/weatherIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/weather_icon"
+                        android:src="@drawable/ic_weather"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/weatherInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="天气信息"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_primary" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/divider" />
+
+                <TextView
+                    android:id="@+id/memoInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
                     android:textSize="16sp"
                     android:textColor="@color/text_primary" />
+
             </LinearLayout>
+        </ScrollView>
 
-            <!-- 分割线 -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/divider" />
-
-            <!-- 备忘录展示 -->
-            <TextView
-                android:id="@+id/memoInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:textColor="@color/text_primary"/>
-        </LinearLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
     <!-- 侧边栏导航菜单 -->
     <com.google.android.material.navigation.NavigationView
