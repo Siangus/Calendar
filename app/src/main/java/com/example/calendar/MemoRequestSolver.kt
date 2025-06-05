@@ -37,7 +37,7 @@ object MemoRequestSolver {
     }
     fun deleteMemo(date: String) {
         val db = dbHelper.writableDatabase
-        db.delete("Memo", "date = ?", arrayOf(date))
+        db.delete("MemoSave", "date = ?", arrayOf(date))
     }
 
 }
