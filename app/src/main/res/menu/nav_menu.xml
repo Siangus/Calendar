@@ -10,7 +10,7 @@
         <item
             android:id="@+id/nav_mem"
             android:icon="@drawable/ic_home"
-            android:title="mem" />
+            android:title="备忘录" />
     </group>
 
     <item android:title="设置">

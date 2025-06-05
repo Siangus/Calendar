@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="1dp"
-        android:divider="#CCC"/>
+        android:divider="@color/color_gray" />
 
     <TextView
         android:id="@+id/alphaTextView"
@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:text="透明度: 40%"
         android:layout_marginTop="24dp"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:textColor="@color/text_primary" />
 
     <SeekBar
         android:id="@+id/alphaSeekBar"
@@ -26,7 +27,9 @@
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="40"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        android:thumbTint="@color/button_text"
+        android:progressTint="@color/button_text" />
 
     <Button
         android:id="@+id/restartButton"
@@ -34,6 +37,8 @@
         android:layout_height="wrap_content"
         android:text="重启应用以生效"
         android:layout_marginTop="16dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/button_background"
+        android:textColor="@color/button_text" />
 
 </LinearLayout>

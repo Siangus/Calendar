@@ -1,0 +1,19 @@
+<resources>
+    <!-- 黑白蓝灰 - 夜间 -->
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_blue">#90C8FF</color>      <!-- 柔和夜间蓝 -->
+    <color name="color_gray">#121212</color>      <!-- 夜间深灰背景 -->
+
+    <!-- 按钮 -->
+    <color name="button_background">#1E1E1E</color>
+    <color name="button_text">#90C8FF</color>
+
+    <!-- Toolbar -->
+    <color name="toolbar_background">#1E1E1E</color>
+    <color name="toolbar_text">#90C8FF</color>
+
+    <!-- 普通文字 -->
+    <color name="text_primary">#EEEEEE</color>
+    <color name="text_secondary">#AAAAAA</color>
+</resources>
