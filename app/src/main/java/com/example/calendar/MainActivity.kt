@@ -40,9 +40,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         // 初始化 Toolbar
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
+     //   val toolbar: Toolbar = findViewById(R.id.toolbar)
+     //   setSupportActionBar(toolbar)
+    //    supportActionBar?.title = "日历"
         // 初始化 DrawerLayout 和 NavigationView
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
@@ -54,9 +54,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         // 初始化日历控件，默认选中今天
         calendarView = findViewById(R.id.calendarView)
         calendarView.selectedDate = CalendarDay.today()

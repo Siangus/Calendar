@@ -21,7 +21,7 @@ class MemoEditActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        supportActionBar?.title = "编辑"
         titleEdit = findViewById(R.id.editTitle)
         textEdit = findViewById(R.id.editText)
         tvSelectedDate = findViewById(R.id.tvSelectedDate)

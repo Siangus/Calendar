@@ -16,11 +16,11 @@
     <color name="color_gray">#F5F5F5</color>      <!-- 极浅灰 -->
     <color name="text_secondary">#666666</color> <!-- values -->
     <!-- 按钮 -->
-    <color name="button_background">#F5F5F5</color>
+    <color name="button_background">#66F5F5F5</color>
     <color name="button_text">#1E90FF</color>
 
     <!-- Toolbar -->
-    <color name="toolbar_background">#F5F5F5</color>
+    <color name="toolbar_background">#66F5F5F5</color>
     <color name="toolbar_text">#1E90FF</color>
 
     <!-- 普通文字 -->

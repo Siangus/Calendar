@@ -32,9 +32,9 @@ class MemoActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navigationView.setNavigationItemSelectedListener(this)
 
         // 初始化 Toolbar
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
+ //       val toolbar: Toolbar = findViewById(R.id.toolbar)
+ //       setSupportActionBar(toolbar)
+        supportActionBar?.title = "备忘录"
         // 设置抽屉开关
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,

@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Toolbar 顶部标题栏 -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar_background"
+        android:title="背景设置"
+        android:titleTextColor="@color/toolbar_text" />
+
     <ListView
         android:id="@+id/bgSettingListView"
         android:layout_width="match_parent"

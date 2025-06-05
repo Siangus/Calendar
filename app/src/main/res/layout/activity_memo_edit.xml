@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 顶部统一 Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar_background"
+        android:title="编辑备忘录"
+        android:titleTextColor="@color/toolbar_text" />
+
     <!-- 日期选择区域 -->
     <LinearLayout
         android:layout_width="match_parent"

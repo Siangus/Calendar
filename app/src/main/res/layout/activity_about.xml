@@ -33,52 +33,56 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- 主要标题 -->
                 <TextView
                     android:id="@+id/tvAppNameVersion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/color_blue"
+                    android:textColor="@color/black"
                     android:gravity="center"
                     android:paddingBottom="16dp" />
 
+                <!-- 联系方式 -->
                 <TextView
                     android:id="@+id/tvContact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_blue"
-                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
                     android:paddingBottom="16dp" />
 
+                <!-- 致谢 -->
                 <TextView
                     android:id="@+id/tvThanks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_blue"
-                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
                     android:paddingBottom="16dp" />
 
+                <!-- GitHub 链接 -->
                 <TextView
                     android:id="@+id/tvGithub"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_blue"
-                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
                     android:paddingBottom="16dp"
-                    android:text="GitHub: https://github.com/xiangyear"
-                    android:autoLink="web" />
+                    android:text="GitHub: https://github.com/siangus" />
 
             </LinearLayout>
         </ScrollView>
 
-        <!-- 固定底部版权 -->
+
+        <!-- 底部版权 -->
         <TextView
             android:id="@+id/tvCopyright"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_secondary"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="center"
             android:padding="12dp" />
     </LinearLayout>

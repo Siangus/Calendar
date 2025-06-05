@@ -12,6 +12,7 @@ import java.io.File
 abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var backgroundImageView: ImageView
     protected lateinit var rootContainer: FrameLayout
+    protected var toolbar: androidx.appcompat.widget.Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +47,32 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(rootContainer)
 
         applyBackgroundFromConfig()
+
+        bindToolbarIfExists()
     }
 
     abstract fun getLayoutResourceId(): Int
 
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun bindToolbarIfExists() {
+        toolbar = findViewById(R.id.toolbar)
+        if (toolbar == null) {
+            Log.w("BaseActivity", "找不到 toolbar")
+        } else {
+            Log.i("BaseActivity", "成功绑定 toolbar")
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
     protected fun applyBackgroundFromConfig() {
         val alpha = ConfigManager.getFloat(ConfigManager.Keys.BACKGROUND_ALPHA, 1.0f)
         val clampedAlpha = alpha.coerceIn(0.1f, 0.6f)

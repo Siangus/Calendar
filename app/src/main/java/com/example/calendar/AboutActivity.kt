@@ -13,7 +13,7 @@ class AboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
 
     private lateinit var drawerLayout: androidx.drawerlayout.widget.DrawerLayout
     private lateinit var navigationView: NavigationView
-    private lateinit var toolbar: Toolbar
+
 
     override fun getLayoutResourceId(): Int = R.layout.activity_about
 
@@ -23,9 +23,9 @@ class AboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         // 初始化控件
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
-        toolbar = findViewById(R.id.toolbar)
+    //    toolbar = findViewById(R.id.toolbar)
 
-        setSupportActionBar(toolbar)
+    //    setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
             this,

@@ -21,16 +21,16 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     private val settingItems = listOf("节日显示", "天气显示", "全局背景")
 
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var toolbar: Toolbar
+ //   private lateinit var toolbar: Toolbar
 
     override fun getLayoutResourceId(): Int = R.layout.activity_settings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
+    //    toolbar = findViewById(R.id.toolbar)
+    //    setSupportActionBar(toolbar)
+        supportActionBar?.title = "设置"
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)

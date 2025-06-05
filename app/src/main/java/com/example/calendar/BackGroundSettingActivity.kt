@@ -28,7 +28,7 @@ class BackgroundSettingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        supportActionBar?.title = "背景设置"
         bgSettingListView = findViewById(R.id.bgSettingListView)
         alphaSeekBar = findViewById(R.id.alphaSeekBar)
         alphaText = findViewById(R.id.alphaTextView)
