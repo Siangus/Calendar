@@ -44,9 +44,13 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         toggle.syncState()
 
         val listView = findViewById<ListView>(R.id.settingListView)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, settingItems)
+        val adapter = object : ArrayAdapter<String>(
+            this,
+            R.layout.item_setting,
+            R.id.setting_item_text,
+            settingItems
+        ) {}
         listView.adapter = adapter
-
         listView.setOnItemClickListener { _, _, position, _ ->
             val selected = settingItems[position]
             showSettingDialog(selected)

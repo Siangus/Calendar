@@ -39,7 +39,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:dividerHeight="1dp"
-                    android:divider="@color/color_gray" />
+                    android:divider="@color/color_divider" />
 
                 <Button
                     android:id="@+id/restartButton"

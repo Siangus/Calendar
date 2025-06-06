@@ -14,6 +14,7 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_blue">#1E90FF</color>      <!-- 亮蓝（Dodger Blue） -->
     <color name="color_gray">#F5F5F5</color>      <!-- 极浅灰 -->
+    <color name="color_divider">#22000000</color>
     <color name="text_secondary">#666666</color> <!-- values -->
     <!-- 按钮 -->
     <color name="button_background">#66F5F5F5</color>
@@ -24,5 +25,5 @@
     <color name="toolbar_text">#1E90FF</color>
 
     <!-- 普通文字 -->
-    <color name="text_primary">#212121</color>
+    <color name="text_primary">#1E90FF</color>
     </resources>

@@ -14,6 +14,6 @@
     <color name="toolbar_text">#90C8FF</color>
 
     <!-- 普通文字 -->
-    <color name="text_primary">#EEEEEE</color>
+    <color name="text_primary">#1E90FF</color>
     <color name="text_secondary">#AAAAAA</color>
 </resources>
