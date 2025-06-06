@@ -16,6 +16,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters += setOf("arm64-v8a") // 只打包 arm64-v8a
+        }
     }
 
     signingConfigs {
@@ -30,11 +34,22 @@ android {
     buildTypes {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            ndk {
+                abiFilters += setOf("arm64-v8a") // release只包含 arm64-v8a
+            }
+        }
+        getByName("debug") {
+            isMinifyEnabled = false
+            // debug保留所有常见架构，方便模拟器和真机调试
+            ndk {
+                abiFilters += setOf("x86_64", "arm64-v8a", "armeabi-v7a", "x86")
+            }
         }
     }
 
@@ -53,14 +68,17 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom)) // Compose BOM 版本管理
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation("androidx.activity:activity-compose:1.7.2")
+
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    debugImplementation("androidx.compose.ui:ui-tooling-preview")
+
+    implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("com.google.android.material:material:1.9.0") {
         exclude(group = "com.android.support")
     }
@@ -69,14 +87,8 @@ dependencies {
         exclude(group = "com.android.support")
     }
 
-    implementation("androidx.navigation:navigation-ui-ktx:2.6.0") {
-        exclude(group = "com.android.support")
-    }
-
-    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0") {
-        exclude(group = "com.android.support")
-    }
     implementation("cn.6tail:lunar:1.3.0")
+
     implementation("com.github.yalantis:ucrop:2.2.8") {
         exclude(group = "com.android.support")
     }
