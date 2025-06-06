@@ -1,0 +1,47 @@
+# README
+
+基于 Material Components 设计的日历应用，包含天气预报和简易备忘录功能。
+
+本项目采用 Apache 2.0 许可证开源，部分使用的图标版权归原 IP 权利方所有。
+
+
+
+## 用户指南
+
+- 如果期望获取到天气相关信息，应当在设置的天气部分配置心知天气的apikey。apikey的获取详见心知天气官网：https://www.seniverse.com/
+
+- 由于日历应用的基本定位，一个日期只会使用一个备忘录。标题被用于备忘录编辑部分的管理而不会在日历部分显示
+
+- 可以在setting里使用自定义的背景图片
+
+
+
+
+
+
+
+
+
+## 大作业相关
+
+本项目被作为ZJGSU的2024-2025学期移动终端软件开发的Android大作业使用，不要拿这个对作者本人鉴抄。
+
+我的学号的SHA256是:fb9e4d04ff03c0f8a21c426af08207b4efe3ce3d25ed6c2b37f54cd5d1fc6dae
+
+~~校方还要在类名里加姓名缩写，但是我又懒得在验收版里删about，所以会定向到这~~
+
+
+
+
+
+## 二次修改相关
+
+- 所有现有的Activity都继承了BaseActivity以完成透明背景的统一，BaseActivity则继承AppCompatActivity
+
+- 应该使用ConfigManager完成配置文件的处理
+
+- Activity应该使用抽象类WeatherRequestSolver的实例化子类获取天气信息。
+- Memo有数据库相关的内容，增删查改参考MemoDbHelper
+
+
+
