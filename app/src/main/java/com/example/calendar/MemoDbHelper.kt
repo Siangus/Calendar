@@ -14,7 +14,6 @@ class MemoDbHelper private constructor(context: Context) :
 
         private const val TABLE_NAME = "MemoSave"
 
-        // 单例实例，volatile + 双重检查锁保证线程安全
         @Volatile
         private var INSTANCE: MemoDbHelper? = null
 
@@ -40,7 +39,7 @@ class MemoDbHelper private constructor(context: Context) :
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // 简单升级策略：删表重建，后续可自行扩展
+        // 简单升级策略：删表重建
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }

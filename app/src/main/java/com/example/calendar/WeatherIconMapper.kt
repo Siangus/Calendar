@@ -15,7 +15,7 @@ object WeatherIconMapper {
         "9" to R.drawable.ic_weather_9,
         "10" to R.drawable.ic_weather_10,
         "11" to R.drawable.ic_weather_11,
-        // ... 继续按需补充
+        // ... 后面还要塞，累了！
         "default" to R.drawable.ic_weather_default
     )
 

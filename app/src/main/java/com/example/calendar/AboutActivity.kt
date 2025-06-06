@@ -62,7 +62,7 @@ class AboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         when (item.itemId) {
             R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
-            R.id.nav_about -> { /* 当前页面，关闭抽屉 */ }
+            R.id.nav_about -> {  }
             R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)

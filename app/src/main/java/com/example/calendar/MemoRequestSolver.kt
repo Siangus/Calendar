@@ -8,7 +8,6 @@ import java.util.Locale
 object MemoRequestSolver {
     private lateinit var dbHelper: MemoDbHelper
 
-    // 一定要先调用这个初始化！
     fun init(context: Context) {
         dbHelper = MemoDbHelper.getInstance(context)
     }

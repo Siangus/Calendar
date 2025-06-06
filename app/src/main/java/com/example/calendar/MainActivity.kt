@@ -38,12 +38,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             val dateStr = "%04d-%02d-%02d".format(today.year, today.month, today.day)
             updateInfoForDate(dateStr)
         }
-
+/*
         // 初始化 Toolbar
      //   val toolbar: Toolbar = findViewById(R.id.toolbar)
      //   setSupportActionBar(toolbar)
     //    supportActionBar?.title = "日历"
-        // 初始化 DrawerLayout 和 NavigationView
+*/
+
+
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)

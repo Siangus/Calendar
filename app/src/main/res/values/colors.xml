@@ -16,6 +16,7 @@
     <color name="color_gray">#F5F5F5</color>      <!-- 极浅灰 -->
     <color name="color_divider">#22000000</color>
     <color name="text_secondary">#666666</color> <!-- values -->
+    <color name="text_background">#66F5F5F5</color>
     <!-- 按钮 -->
     <color name="button_background">#66F5F5F5</color>
     <color name="button_text">#1E90FF</color>
