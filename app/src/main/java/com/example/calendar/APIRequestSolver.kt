@@ -40,7 +40,7 @@ object ApiRequestSolver : WeatherRequestSolver() {
         val key = apiKey ?: return
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val url = "$BASE_URL?key=$key&location=ip&language=zh-Hans&unit=c&days=3"
+                val url = "$BASE_URL?key=$key&location=ip&language=zh-Hans&unit=c"
                 Log.d(TAG, "请求天气数据: $url")
                 val request = Request.Builder().url(url).get().build()
                 val response: Response = client.newCall(request).execute()
