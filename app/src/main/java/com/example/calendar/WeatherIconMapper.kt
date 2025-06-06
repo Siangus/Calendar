@@ -42,7 +42,7 @@ object WeatherIconMapper {
         "36" to R.drawable.ic_weather_36,
         "37" to R.drawable.ic_weather_37,
         "38" to R.drawable.ic_weather_38,
-        "99" to R.drawable.ic_weather_99,
+   //     "99" to R.drawable.ic_weather_99,   //N/A不如ori顺眼
         // ... 后面可能看有没有极端点的天气决定是否还要塞，但是没有图标的也有默认可用
         "default" to R.drawable.ic_weather_default
     )
