@@ -19,29 +19,15 @@
 
 
 
-
-
-
 ## 大作业相关
 
 本项目被作为ZJGSU的2024-2025学期移动终端软件开发的Android大作业使用，不要拿这个对作者本人鉴抄。
 
 我的学号的SHA256是:fb9e4d04ff03c0f8a21c426af08207b4efe3ce3d25ed6c2b37f54cd5d1fc6dae
 
-~~校方还要在类名里加姓名缩写，但是我又懒得在验收版里删about，所以会定向到这~~
+~~验收版里会加上姓名缩写部分的内容~~
 
 
-
-
-
-## 二次修改相关
-
-- 所有现有的Activity都继承了BaseActivity以完成透明背景的统一，BaseActivity则继承AppCompatActivity
-
-- 应该使用ConfigManager完成配置文件的处理
-
-- Activity应该使用抽象类WeatherRequestSolver的实例化子类获取天气信息。
-- Memo有数据库相关的内容，增删查改参考MemoDbHelper
 
 
 

@@ -90,8 +90,7 @@ class BackgroundSettingActivity : BaseActivity() {
             // 延迟一会确保 Toast 显示完整
             Handler(Looper.getMainLooper()).postDelayed({
                 startActivity(intent)
-                // 结束当前进程（可选）
-                // android.os.Process.killProcess(android.os.Process.myPid())
+
             }, 500)
         }
     }
