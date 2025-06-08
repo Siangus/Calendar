@@ -1,11 +1,11 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class MemoDbHelper private constructor(context: Context) :
+class HYZMemoDbHelper private constructor(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
     companion object {
@@ -15,11 +15,11 @@ class MemoDbHelper private constructor(context: Context) :
         private const val TABLE_NAME = "MemoSave"
 
         @Volatile
-        private var INSTANCE: MemoDbHelper? = null
+        private var INSTANCE: HYZMemoDbHelper? = null
 
-        fun getInstance(context: Context): MemoDbHelper {
+        fun getInstance(context: Context): HYZMemoDbHelper {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: MemoDbHelper(context.applicationContext).also { INSTANCE = it }
+                INSTANCE ?: HYZMemoDbHelper(context.applicationContext).also { INSTANCE = it }
             }
         }
 
@@ -65,7 +65,7 @@ class MemoDbHelper private constructor(context: Context) :
         return db.update(TABLE_NAME, values, "id = ?", arrayOf(id.toString()))
     }
 
-    fun queryMemoByDate(date: String): MemoItem? {
+    fun queryMemoByDate(date: String): HYZMemoItem? {
         val db = readableDatabase
         val cursor = db.query(
             TABLE_NAME,
@@ -76,7 +76,7 @@ class MemoDbHelper private constructor(context: Context) :
         )
         cursor.use {
             if (it.moveToFirst()) {
-                return MemoItem(
+                return HYZMemoItem(
                     id = it.getInt(it.getColumnIndexOrThrow("id")),
                     date = it.getString(it.getColumnIndexOrThrow("date")),
                     title = it.getString(it.getColumnIndexOrThrow("title")),
@@ -88,7 +88,7 @@ class MemoDbHelper private constructor(context: Context) :
         return null
     }
 
-    fun queryAllMemosSortedByEditTime(): List<MemoItem> {
+    fun queryAllMemosSortedByEditTime(): List<HYZMemoItem> {
         val db = readableDatabase
         val cursor = db.query(
             TABLE_NAME,
@@ -96,11 +96,11 @@ class MemoDbHelper private constructor(context: Context) :
             null, null, null, null,
             "lastEditTime DESC"
         )
-        val result = mutableListOf<MemoItem>()
+        val result = mutableListOf<HYZMemoItem>()
         cursor.use {
             while (it.moveToNext()) {
                 result.add(
-                    MemoItem(
+                    HYZMemoItem(
                         id = it.getInt(it.getColumnIndexOrThrow("id")),
                         date = it.getString(it.getColumnIndexOrThrow("date")),
                         title = it.getString(it.getColumnIndexOrThrow("title")),

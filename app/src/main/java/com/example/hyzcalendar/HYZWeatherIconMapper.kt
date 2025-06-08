@@ -1,6 +1,6 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
-object WeatherIconMapper {
+object HYZWeatherIconMapper {
     // key 是API返回的code_day字符串，value 是drawable资源id
     val iconMap = mapOf(
         "0" to R.drawable.ic_weather_0,

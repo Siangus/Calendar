@@ -1,8 +1,8 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
 import com.nlf.calendar.Solar
 
-object FestivalSupporter {
+object HYZFestivalSupporter {
 
     private val solarFestivals = mapOf(
         "01-01" to "元旦",
@@ -22,7 +22,7 @@ object FestivalSupporter {
         val month = parts[1].toIntOrNull() ?: return "日期格式错误"
         val day = parts[2].toIntOrNull() ?: return "日期格式错误"
 
-        val mode = ConfigManager.getInt(ConfigManager.Keys.SHOW_FESTIVAL, 1)
+        val mode = HYZConfigManager.getInt(HYZConfigManager.Keys.SHOW_FESTIVAL, 1)
 
         if (mode == 0) {
             // 不显示节日，返回空字符串

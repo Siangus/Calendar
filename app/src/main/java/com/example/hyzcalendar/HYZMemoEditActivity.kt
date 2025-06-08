@@ -1,4 +1,4 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
 import android.os.Bundle
 import android.widget.*
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
-class MemoEditActivity : BaseActivity() {
+class HYZMemoEditActivity : HYZBaseActivity() {
 
     private lateinit var titleEdit: EditText
     private lateinit var textEdit: EditText
@@ -17,7 +17,7 @@ class MemoEditActivity : BaseActivity() {
 
     private var selectedDate: CalendarDay = CalendarDay.today()
 
-    override fun getLayoutResourceId(): Int = R.layout.activity_memo_edit
+    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_memo_edit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +66,7 @@ class MemoEditActivity : BaseActivity() {
             val dateStr = "%04d-%02d-%02d".format(
                 selectedDate.year, selectedDate.month, selectedDate.day
             )
-            MemoRequestSolver.saveMemo(
+            HYZMemoRequestSolver.saveMemo(
                 dateStr,
                 titleEdit.text.toString(),
                 textEdit.text.toString()
@@ -82,7 +82,7 @@ class MemoEditActivity : BaseActivity() {
                     val dateStr = "%04d-%02d-%02d".format(
                         selectedDate.year, selectedDate.month, selectedDate.day
                     )
-                    MemoRequestSolver.deleteMemo(dateStr)
+                    HYZMemoRequestSolver.deleteMemo(dateStr)
                     Toast.makeText(this, "备忘已删除", Toast.LENGTH_SHORT).show()
                     // 设置结果通知
                     setResult(RESULT_OK, intent.apply { putExtra("action", "delete") })
@@ -103,7 +103,7 @@ class MemoEditActivity : BaseActivity() {
 
     private fun loadMemoForDate(date: CalendarDay) {
         val dateStr = "%04d-%02d-%02d".format(date.year, date.month, date.day)
-        val memo = MemoRequestSolver.getMemoByDate(dateStr)
+        val memo = HYZMemoRequestSolver.getMemoByDate(dateStr)
         titleEdit.setText(memo?.title ?: "")
         textEdit.setText(memo?.text ?: "")
     }

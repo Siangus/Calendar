@@ -1,4 +1,4 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 
-class HYZAboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HYZAboutActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: androidx.drawerlayout.widget.DrawerLayout
     private lateinit var navigationView: NavigationView
 
 
-    override fun getLayoutResourceId(): Int = R.layout.activity_about
+    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_about
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +57,8 @@ class HYZAboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
-            R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_settings -> startActivity(Intent(this, HYZSettingsActivity::class.java))
+            R.id.nav_mem -> startActivity(Intent(this, HYZMemoActivity::class.java))
             R.id.nav_about -> {  }
             R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
         }

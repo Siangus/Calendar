@@ -1,4 +1,4 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
 import org.junit.Test
 

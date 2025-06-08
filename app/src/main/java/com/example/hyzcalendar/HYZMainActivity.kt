@@ -1,4 +1,4 @@
-package com.example.calendar
+package com.example.hyzcalendar
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,8 +13,8 @@ import com.google.android.material.navigation.NavigationView
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
-class HYZMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var weatherSolver: WeatherRequestSolver  // 用抽象父类引用
+class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var weatherSolver: HYZWeatherRequestSolver  // 用抽象父类引用
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var weatherIcon: ImageView
@@ -23,7 +23,7 @@ class HYZMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     private lateinit var festivalInfo: TextView
 
 
-    override fun getLayoutResourceId(): Int = R.layout.activity_main
+    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +67,8 @@ class HYZMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
-            R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_settings -> startActivity(Intent(this, HYZSettingsActivity::class.java))
+            R.id.nav_mem -> startActivity(Intent(this, HYZMemoActivity::class.java))
             R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
             R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
 
@@ -90,9 +90,9 @@ class HYZMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         weatherIcon.setImageResource(resId)
         weatherInfo.text = weatherSolver.getWeatherInfo(dateStr)
 
-        val memo = MemoRequestSolver.getMemoContent(dateStr)
+        val memo = HYZMemoRequestSolver.getMemoContent(dateStr)
         memoInfo.text = memo
-        festivalInfo.text = FestivalSupporter.getFestival(dateStr)
+        festivalInfo.text = HYZFestivalSupporter.getFestival(dateStr)
     }
 
 

@@ -2,14 +2,14 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.calendar">
+    package="com.example.hyzcalendar">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".CalendarApp"
+        android:name="com.example.hyzcalendar.HYZCalendarApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,7 +30,7 @@
         </provider>
 
         <activity
-            android:name=".HYZMainActivity"
+            android:name="com.example.hyzcalendar.HYZMainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Calendar">
@@ -39,13 +39,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HYZAboutActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".BackgroundSettingActivity" />
+        <activity android:name="com.example.hyzcalendar.HYZAboutActivity" />
+        <activity android:name="com.example.hyzcalendar.HYZSettingsActivity" />
+        <activity android:name="com.example.hyzcalendar.BackgroundSettingActivity" />
 
         <!-- 新增Memo相关Activity声明 -->
-        <activity android:name=".MemoActivity" />
-        <activity android:name=".MemoEditActivity" />
+        <activity android:name="com.example.hyzcalendar.HYZMemoActivity" />
+        <activity android:name="com.example.hyzcalendar.HYZMemoEditActivity" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
