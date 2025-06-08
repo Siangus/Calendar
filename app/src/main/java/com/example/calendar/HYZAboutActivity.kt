@@ -8,7 +8,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 
-class AboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HYZAboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: androidx.drawerlayout.widget.DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -60,7 +60,7 @@ class AboutActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
             R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
             R.id.nav_about -> {  }
-            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true

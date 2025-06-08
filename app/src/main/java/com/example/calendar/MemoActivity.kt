@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -75,8 +74,8 @@ class MemoActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         when (item.itemId) {
             R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
-            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
-            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)

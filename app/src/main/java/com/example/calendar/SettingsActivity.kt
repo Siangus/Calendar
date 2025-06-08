@@ -113,8 +113,8 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         when (item.itemId) {
             R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
-            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
-            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)

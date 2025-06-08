@@ -13,7 +13,7 @@ import com.google.android.material.navigation.NavigationView
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HYZMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var weatherSolver: WeatherRequestSolver  // 用抽象父类引用
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var calendarView: MaterialCalendarView
@@ -69,8 +69,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         when (item.itemId) {
             R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
-            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
-            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)
