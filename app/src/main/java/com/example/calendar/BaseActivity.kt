@@ -18,7 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 初始化 ConfigManager（防止未初始化）
+        // 初始化 ConfigManager
         ConfigManager.init(applicationContext)
 
         // 创建根容器
@@ -31,7 +31,6 @@ abstract class BaseActivity : AppCompatActivity() {
             isFocusable = false
         }
 
-        // 添加背景图层（底层）
         rootContainer.addView(
             backgroundImageView,
             0,
@@ -97,7 +96,7 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
-        // 默认背景（可以自定义）
+        // 默认背景
         backgroundImageView.setImageResource(R.drawable.default_background)
     }
 

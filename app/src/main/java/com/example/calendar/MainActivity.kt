@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -38,13 +37,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             val dateStr = "%04d-%02d-%02d".format(today.year, today.month, today.day)
             updateInfoForDate(dateStr)
         }
-/*
-        // 初始化 Toolbar
-     //   val toolbar: Toolbar = findViewById(R.id.toolbar)
-     //   setSupportActionBar(toolbar)
-    //    supportActionBar?.title = "日历"
-*/
-
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)

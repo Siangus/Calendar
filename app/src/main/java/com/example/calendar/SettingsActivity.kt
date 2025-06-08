@@ -11,7 +11,6 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -21,15 +20,12 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     private val settingItems = listOf("节日显示", "天气显示", "全局背景")
 
     private lateinit var drawerLayout: DrawerLayout
- //   private lateinit var toolbar: Toolbar
 
     override fun getLayoutResourceId(): Int = R.layout.activity_settings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-    //    toolbar = findViewById(R.id.toolbar)
-    //    setSupportActionBar(toolbar)
         supportActionBar?.title = "设置"
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
@@ -71,7 +67,6 @@ class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
             Handler(Looper.getMainLooper()).postDelayed({
                 startActivity(intent)
-                // android.os.Process.killProcess(android.os.Process.myPid())
             }, 500)
         }
     }

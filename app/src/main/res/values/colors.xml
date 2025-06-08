@@ -12,7 +12,7 @@
     <!-- 黑白蓝灰 - 日间 -->
     <color name="color_black">#212121</color>     <!-- 深灰近黑 -->
     <color name="color_white">#FFFFFF</color>
-    <color name="color_blue">#1E90FF</color>      <!-- 亮蓝（Dodger Blue） -->
+    <color name="color_blue">#1E90FF</color>      <!-- 亮蓝 -->
     <color name="color_gray">#F5F5F5</color>      <!-- 极浅灰 -->
     <color name="color_divider">#22000000</color>
     <color name="text_secondary">#666666</color> <!-- values -->

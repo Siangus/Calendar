@@ -28,7 +28,7 @@ class MemoEditActivity : BaseActivity() {
         btnChooseDate = findViewById(R.id.btnChooseDate)
         btnSave = findViewById(R.id.btnSave)
         btnDelete = findViewById<Button>(R.id.btnDelete)
-        // 初始化日期（从 intent 获取）
+        // 初始化日期
         val passedDate = intent.getStringExtra("date")
         selectedDate = if (passedDate != null) {
             val parts = passedDate.split("-")
