@@ -12,6 +12,8 @@ import com.google.android.material.navigation.NavigationView
 
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 
 class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var weatherSolver: HYZWeatherRequestSolver  // 用抽象父类引用
@@ -52,6 +54,25 @@ class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
         toggle.syncState()
         // 初始化日历控件，默认选中今天
         calendarView = findViewById(R.id.calendarView)
+        // 设置中文月份标题
+        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getStringArray(R.array.month_names)))
+
+        // 设置中文星期
+        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getStringArray(R.array.weekday_names)))
+        calendarView.setDayFormatter(HYZLunarDayFormatter())
+
+
+        //设置农历
+
+/*
+
+*/
+        calendarView.setOnDateChangedListener { _, date, _ ->
+            val dateStr = "%04d-%02d-%02d".format(date.year, date.month, date.day)
+            Toast.makeText(this, "选中日期: $dateStr", Toast.LENGTH_SHORT).show()
+            updateInfoForDate(dateStr)
+        }
+
         calendarView.selectedDate = CalendarDay.today()
         calendarView.setOnDateChangedListener { _, date, _ ->
             val dateStr = "%04d-%02d-%02d".format(date.year, date.month, date.day)

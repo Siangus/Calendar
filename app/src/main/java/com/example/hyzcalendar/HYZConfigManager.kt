@@ -55,6 +55,6 @@ object HYZConfigManager {
         const val CUSTOM_BACKGROUND_URI = "custom_background_uri"
         const val SHOW_FESTIVAL = "show_festival"  // 0=不显示, 1=公历节日, 2=公历+农历节日
         const val WEATHER_API_KEY = "weather_api_key"
-
+        const val SHOW_LUNAR = "show_lunar"
     }
 }

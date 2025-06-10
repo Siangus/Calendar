@@ -17,7 +17,7 @@ import com.google.android.material.navigation.NavigationView
 
 class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val settingItems = listOf("节日显示", "天气显示", "全局背景")
+    private val settingItems = listOf("节日显示", "天气显示", "全局背景","是否显示农历")
 
     private lateinit var drawerLayout: DrawerLayout
 
@@ -87,6 +87,20 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
                     .setNegativeButton("取消", null)
                     .show()
             }
+            "是否显示农历" -> {
+                val options = arrayOf("不显示农历", "显示农历")
+                val currentMode = HYZConfigManager.getInt(HYZConfigManager.Keys.SHOW_LUNAR, 0)
+
+                AlertDialog.Builder(this)
+                    .setTitle("农历显示设置")
+                    .setSingleChoiceItems(options, currentMode) { dialog, which ->
+                        HYZConfigManager.set(HYZConfigManager.Keys.SHOW_LUNAR, which)
+                        Toast.makeText(this, "农历显示设置已保存", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("取消", null)
+                    .show()
+            }
             "天气显示" -> {
                 val input = EditText(this)
                 input.setText(HYZConfigManager.getString(HYZConfigManager.Keys.WEATHER_API_KEY) ?: "")
@@ -108,6 +122,7 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
             }
         }
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
