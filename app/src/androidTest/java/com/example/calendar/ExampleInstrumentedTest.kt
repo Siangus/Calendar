@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class HYZMemoAdapter(
-    private val items: List<HYZMemoItem>,
-    private val onItemClick: (HYZMemoItem) -> Unit
-) : RecyclerView.Adapter<HYZMemoAdapter.MemoViewHolder>() {
+class MemoAdapter(
+    private val items: List<MemoItem>,
+    private val onItemClick: (MemoItem) -> Unit
+) : RecyclerView.Adapter<MemoAdapter.MemoViewHolder>() {
 
     inner class MemoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dateView: TextView = itemView.findViewById(R.id.memoDate)
@@ -27,7 +27,7 @@ class HYZMemoAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.hyz_item_memo, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_memo, parent, false)
         return MemoViewHolder(view)
     }
 

@@ -1,12 +1,12 @@
-package com.example.hyzcalendar
+package com.example.calendar
 import com.nlf.calendar.Solar
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.format.DayFormatter
 
-class HYZLunarDayFormatter : DayFormatter {
+class LunarDayFormatter : DayFormatter {
     override fun format(day: CalendarDay): String {
         val solarDay = day.day
-        val showLunar = HYZConfigManager.getInt(HYZConfigManager.Keys.SHOW_LUNAR)
+        val showLunar = ConfigManager.getInt(ConfigManager.Keys.SHOW_LUNAR)
         val lunar = Solar(day.year, day.month, day.day).lunar
 
         return when {

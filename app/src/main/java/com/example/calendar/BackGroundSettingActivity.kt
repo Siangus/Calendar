@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.app.Activity
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.core.content.FileProvider
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
-class BackgroundSettingActivity : HYZBaseActivity() {
+class BackgroundSettingActivity : BaseActivity() {
 
     private lateinit var bgSettingListView: ListView
     private lateinit var alphaSeekBar: SeekBar
@@ -24,7 +24,7 @@ class BackgroundSettingActivity : HYZBaseActivity() {
 
     private val options = listOf("默认背景", "自定义背景")
 
-    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_background_setting
+    override fun getLayoutResourceId(): Int = R.layout.activity_background_setting
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,8 +15,8 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 
-class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var weatherSolver: HYZWeatherRequestSolver  // 用抽象父类引用
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var weatherSolver: WeatherRequestSolver  // 用抽象父类引用
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var weatherIcon: ImageView
@@ -25,7 +25,7 @@ class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var festivalInfo: TextView
 
 
-    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_main
+    override fun getLayoutResourceId(): Int = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +59,7 @@ class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
 
         // 设置中文星期
         calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getStringArray(R.array.weekday_names)))
-        calendarView.setDayFormatter(HYZLunarDayFormatter())
+        calendarView.setDayFormatter(LunarDayFormatter())
 
 
         //设置农历
@@ -88,10 +88,10 @@ class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, HYZSettingsActivity::class.java))
-            R.id.nav_mem -> startActivity(Intent(this, HYZMemoActivity::class.java))
-            R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
-            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -111,9 +111,9 @@ class HYZMainActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
         weatherIcon.setImageResource(resId)
         weatherInfo.text = weatherSolver.getWeatherInfo(dateStr)
 
-        val memo = HYZMemoRequestSolver.getMemoContent(dateStr)
+        val memo = MemoRequestSolver.getMemoContent(dateStr)
         memoInfo.text = memo
-        festivalInfo.text = HYZFestivalSupporter.getFestival(dateStr)
+        festivalInfo.text = FestivalSupporter.getFestival(dateStr)
     }
 
 

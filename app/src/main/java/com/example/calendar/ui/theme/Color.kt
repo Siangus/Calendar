@@ -1,4 +1,4 @@
-package com.example.hyzcalendar.ui.theme
+package com.example.calendar.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

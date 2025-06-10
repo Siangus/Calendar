@@ -1,4 +1,4 @@
-package com.example.hyzcalendar.ui.theme
+package com.example.calendar.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

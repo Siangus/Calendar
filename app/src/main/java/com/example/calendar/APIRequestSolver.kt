@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.content.Context
 import android.util.Log
@@ -16,7 +16,7 @@ data class WeatherData(
     val iconKey: String
 )
 
-object ApiRequestSolver : HYZWeatherRequestSolver() {
+object ApiRequestSolver : WeatherRequestSolver() {
 
     private const val TAG = "ApiRequestSolver"
     private const val BASE_URL = "https://api.seniverse.com/v3/weather/daily.json"
@@ -28,7 +28,7 @@ object ApiRequestSolver : HYZWeatherRequestSolver() {
 
     override fun init(context: Context, onDataLoaded: (() -> Unit)?) {
         this.onDataLoaded = onDataLoaded
-        apiKey = HYZConfigManager.getString(HYZConfigManager.Keys.WEATHER_API_KEY)
+        apiKey = ConfigManager.getString(ConfigManager.Keys.WEATHER_API_KEY)
         if (apiKey.isNullOrEmpty()) {
             Log.e(TAG, "API Key 未配置")
             return
@@ -110,9 +110,9 @@ object ApiRequestSolver : HYZWeatherRequestSolver() {
     override fun parseIconId(data: Any?): Int {
         if (data !is WeatherData) {
             Log.w(TAG, "天气图标数据无效，返回默认图标")
-            return HYZWeatherIconMapper.getIconResId("default")
+            return WeatherIconMapper.getIconResId("default")
         }
-        return HYZWeatherIconMapper.getIconResId(data.iconKey)
+        return WeatherIconMapper.getIconResId(data.iconKey)
     }
 
     override fun parseWeatherDescription(data: Any?): String {

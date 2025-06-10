@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 
-class HYZMemoActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MemoActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: HYZMemoAdapter
-    private val memoList = mutableListOf<HYZMemoItem>()
+    private lateinit var adapter: MemoAdapter
+    private val memoList = mutableListOf<MemoItem>()
 
-    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_memo
+    override fun getLayoutResourceId(): Int = R.layout.activity_memo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +48,14 @@ class HYZMemoActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
         recyclerView.addItemDecoration(divider)
 
         findViewById<Button>(R.id.btnAddMemo).setOnClickListener {
-            val intent = Intent(this, HYZMemoEditActivity::class.java)
+            val intent = Intent(this, MemoEditActivity::class.java)
             intent.putExtra("date", "") // 空表示新建
             startActivity(intent)
         }
 
-        memoList.addAll(HYZMemoRequestSolver.getMemoList())
-        adapter = HYZMemoAdapter(memoList) { memoItem ->
-            val intent = Intent(this, HYZMemoEditActivity::class.java)
+        memoList.addAll(MemoRequestSolver.getMemoList())
+        adapter = MemoAdapter(memoList) { memoItem ->
+            val intent = Intent(this, MemoEditActivity::class.java)
             intent.putExtra("date", memoItem.date)
             startActivity(intent)
         }
@@ -66,16 +66,16 @@ class HYZMemoActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelect
         super.onResume()
         // 返回时刷新列表
         memoList.clear()
-        memoList.addAll(HYZMemoRequestSolver.getMemoList())
+        memoList.addAll(MemoRequestSolver.getMemoList())
         adapter.notifyDataSetChanged()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, HYZSettingsActivity::class.java))
-            R.id.nav_mem -> startActivity(Intent(this, HYZMemoActivity::class.java))
-            R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
-            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)

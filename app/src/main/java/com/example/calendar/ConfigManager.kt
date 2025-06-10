@@ -1,9 +1,9 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.content.Context
 import android.content.SharedPreferences
 
-object HYZConfigManager {
+object ConfigManager {
 
     private const val PREFS_NAME = "app_settings"
     private lateinit var prefs: SharedPreferences

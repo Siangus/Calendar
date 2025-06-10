@@ -1,6 +1,6 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
-data class HYZMemoItem(
+data class MemoItem(
     val id: Int = 0,
     val date: String,
     val title: String,

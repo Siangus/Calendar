@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -15,13 +15,13 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class SettingsActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val settingItems = listOf("节日显示", "天气显示", "全局背景","是否显示农历")
 
     private lateinit var drawerLayout: DrawerLayout
 
-    override fun getLayoutResourceId(): Int = R.layout.hyz_activity_settings
+    override fun getLayoutResourceId(): Int = R.layout.activity_settings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
         val listView = findViewById<ListView>(R.id.settingListView)
         val adapter = object : ArrayAdapter<String>(
             this,
-            R.layout.hyz_item_setting,
+            R.layout.item_setting,
             R.id.setting_item_text,
             settingItems
         ) {}
@@ -75,12 +75,12 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
         when (settingName) {
             "节日显示" -> {
                 val options = arrayOf("不显示节日", "仅显示公历节日", "公历与农历节日")
-                val currentMode = HYZConfigManager.getInt(HYZConfigManager.Keys.SHOW_FESTIVAL, 1)
+                val currentMode = ConfigManager.getInt(ConfigManager.Keys.SHOW_FESTIVAL, 1)
 
                 AlertDialog.Builder(this)
                     .setTitle("节日显示设置")
                     .setSingleChoiceItems(options, currentMode) { dialog, which ->
-                        HYZConfigManager.set(HYZConfigManager.Keys.SHOW_FESTIVAL, which)
+                        ConfigManager.set(ConfigManager.Keys.SHOW_FESTIVAL, which)
                         Toast.makeText(this, "节日显示设置已保存", Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
                     }
@@ -89,12 +89,12 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
             }
             "是否显示农历" -> {
                 val options = arrayOf("不显示农历", "显示农历")
-                val currentMode = HYZConfigManager.getInt(HYZConfigManager.Keys.SHOW_LUNAR, 0)
+                val currentMode = ConfigManager.getInt(ConfigManager.Keys.SHOW_LUNAR, 0)
 
                 AlertDialog.Builder(this)
                     .setTitle("农历显示设置")
                     .setSingleChoiceItems(options, currentMode) { dialog, which ->
-                        HYZConfigManager.set(HYZConfigManager.Keys.SHOW_LUNAR, which)
+                        ConfigManager.set(ConfigManager.Keys.SHOW_LUNAR, which)
                         Toast.makeText(this, "农历显示设置已保存", Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
                     }
@@ -103,7 +103,7 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
             }
             "天气显示" -> {
                 val input = EditText(this)
-                input.setText(HYZConfigManager.getString(HYZConfigManager.Keys.WEATHER_API_KEY) ?: "")
+                input.setText(ConfigManager.getString(ConfigManager.Keys.WEATHER_API_KEY) ?: "")
 
                 AlertDialog.Builder(this)
                     .setTitle("天气显示设置")
@@ -111,7 +111,7 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
                     .setView(input)
                     .setPositiveButton("保存") { _, _ ->
                         val newKey = input.text.toString().trim()
-                        HYZConfigManager.set(HYZConfigManager.Keys.WEATHER_API_KEY, newKey)
+                        ConfigManager.set(ConfigManager.Keys.WEATHER_API_KEY, newKey)
                         Toast.makeText(this, "API Key已保存", Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("取消", null)
@@ -126,10 +126,10 @@ class HYZSettingsActivity : HYZBaseActivity(), NavigationView.OnNavigationItemSe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, HYZSettingsActivity::class.java))
-            R.id.nav_mem -> startActivity(Intent(this, HYZMemoActivity::class.java))
-            R.id.nav_about -> startActivity(Intent(this, HYZAboutActivity::class.java))
-            R.id.nav_home -> startActivity(Intent(this, HYZMainActivity::class.java))
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.nav_mem -> startActivity(Intent(this, MemoActivity::class.java))
+            R.id.nav_about -> startActivity(Intent(this, AboutActivity::class.java))
+            R.id.nav_home -> startActivity(Intent(this, MainActivity::class.java))
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)

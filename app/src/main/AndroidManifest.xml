@@ -2,14 +2,14 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.hyzcalendar">
+    package="com.example.calendar">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.hyzcalendar.HYZCalendarApp"
+        android:name="com.example.calendar.CalendarApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,7 +30,7 @@
         </provider>
 
         <activity
-            android:name="com.example.hyzcalendar.HYZMainActivity"
+            android:name="com.example.calendar.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Calendar">
@@ -39,13 +39,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.hyzcalendar.HYZAboutActivity" />
-        <activity android:name="com.example.hyzcalendar.HYZSettingsActivity" />
-        <activity android:name="com.example.hyzcalendar.BackgroundSettingActivity" />
+        <activity android:name="com.example.calendar.AboutActivity" />
+        <activity android:name="com.example.calendar.SettingsActivity" />
+        <activity android:name="com.example.calendar.BackgroundSettingActivity" />
 
         <!-- 新增Memo相关Activity声明 -->
-        <activity android:name="com.example.hyzcalendar.HYZMemoActivity" />
-        <activity android:name="com.example.hyzcalendar.HYZMemoEditActivity" />
+        <activity android:name="com.example.calendar.MemoActivity" />
+        <activity android:name="com.example.calendar.MemoEditActivity" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

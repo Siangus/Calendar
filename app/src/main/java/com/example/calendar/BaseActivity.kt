@@ -1,4 +1,4 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class HYZBaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var backgroundImageView: ImageView
     protected lateinit var rootContainer: FrameLayout
     protected var toolbar: androidx.appcompat.widget.Toolbar? = null
@@ -16,8 +16,8 @@ abstract class HYZBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 初始化 HYZConfigManager
-        HYZConfigManager.init(applicationContext)
+        // 初始化 ConfigManager
+        ConfigManager.init(applicationContext)
 
         // 创建根容器
         rootContainer = FrameLayout(this)
@@ -64,20 +64,20 @@ abstract class HYZBaseActivity : AppCompatActivity() {
     private fun bindToolbarIfExists() {
         toolbar = findViewById(R.id.toolbar)
         if (toolbar == null) {
-            Log.w("HYZBaseActivity", "找不到 toolbar")
+            Log.w("BaseActivity", "找不到 toolbar")
         } else {
-            Log.i("HYZBaseActivity", "成功绑定 toolbar")
+            Log.i("BaseActivity", "成功绑定 toolbar")
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }
     protected fun applyBackgroundFromConfig() {
-        val alpha = HYZConfigManager.getFloat(HYZConfigManager.Keys.BACKGROUND_ALPHA, 1.0f)
+        val alpha = ConfigManager.getFloat(ConfigManager.Keys.BACKGROUND_ALPHA, 1.0f)
         val clampedAlpha = alpha.coerceIn(0.1f, 0.6f)
         backgroundImageView.alpha = clampedAlpha
         rootContainer.setBackgroundColor(Color.WHITE)
 
-        when (HYZConfigManager.getInt(HYZConfigManager.Keys.BACKGROUND_OPTION, 1)) {
+        when (ConfigManager.getInt(ConfigManager.Keys.BACKGROUND_OPTION, 1)) {
             2 -> {
                 val croppedFile = getFileStreamPath("cropped_bg.png")
                 if (croppedFile.exists() && croppedFile.length() > 0) {
@@ -86,10 +86,10 @@ abstract class HYZBaseActivity : AppCompatActivity() {
                         backgroundImageView.setImageBitmap(bitmap)
                         return
                     } else {
-                        Log.e("HYZBaseActivity", "自定义背景文件存在但解析失败")
+                        Log.e("BaseActivity", "自定义背景文件存在但解析失败")
                     }
                 } else {
-                    Log.w("HYZBaseActivity", "自定义背景文件不存在")
+                    Log.w("BaseActivity", "自定义背景文件不存在")
                 }
             }
         }
@@ -101,6 +101,6 @@ abstract class HYZBaseActivity : AppCompatActivity() {
     open fun setBackgroundAlpha(alpha: Float) {
         val clampedAlpha = alpha.coerceIn(0.1f, 0.6f)
         backgroundImageView.alpha = clampedAlpha
-        HYZConfigManager.set(HYZConfigManager.Keys.BACKGROUND_ALPHA, clampedAlpha)
+        ConfigManager.set(ConfigManager.Keys.BACKGROUND_ALPHA, clampedAlpha)
     }
 }

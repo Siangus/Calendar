@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.hyzcalendar"
+    namespace = "com.example.calendar"
     compileSdk = 35
 
     defaultConfig {

@@ -1,15 +1,15 @@
-package com.example.hyzcalendar
+package com.example.calendar
 
 import android.content.Context
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-object HYZMemoRequestSolver {
-    private lateinit var dbHelper: HYZMemoDbHelper
+object MemoRequestSolver {
+    private lateinit var dbHelper: MemoDbHelper
 
     fun init(context: Context) {
-        dbHelper = HYZMemoDbHelper.getInstance(context)
+        dbHelper = MemoDbHelper.getInstance(context)
     }
 
     fun getMemoContent(dateStr: String): String {
@@ -17,11 +17,11 @@ object HYZMemoRequestSolver {
         return memo?.text ?: "暂无备忘"
     }
 
-    fun getMemoList(): List<HYZMemoItem> {
+    fun getMemoList(): List<MemoItem> {
         return dbHelper.queryAllMemosSortedByEditTime()
     }
 
-    fun getMemoByDate(date: String): HYZMemoItem? {
+    fun getMemoByDate(date: String): MemoItem? {
         return dbHelper.queryMemoByDate(date)
     }
 
